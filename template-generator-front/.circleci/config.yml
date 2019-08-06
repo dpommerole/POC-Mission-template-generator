@@ -7,9 +7,13 @@ jobs:
   build:
     docker:
       # specify the version you desire here
+<<<<<<< HEAD
       - image: circleci/node:10.15.3-browsers
         environment:
           TZ: '/usr/share/zoneinfo/Europe/Paris'
+=======
+      - image: circleci/node:7.10
+>>>>>>> master
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
