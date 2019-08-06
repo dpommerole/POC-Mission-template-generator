@@ -3,6 +3,19 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
+
+dot_cache_key: &dot_cache_key v1-dot_cache-{{ checksum "yarn.lock" }}
+
+save_dot_cache: &save_dot_cache
+  save_cache:
+    key: *dot_cache_key
+    paths:
+      - ~/.cache
+
+restore_dot_cache: &restore_dot_cache
+  restore_cache:
+    key: *dot_cache_key
+
 jobs:
   build:
     docker:
@@ -28,7 +41,14 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - *restore_dot_cache
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - *save_dot_cache
+      - run:
+          name: Run linter
+          command: yarn lint
 
       - save_cache:
           paths:
