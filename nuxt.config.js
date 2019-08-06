@@ -28,6 +28,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/vuelidate', ssr: true }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -38,7 +39,36 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    "@nuxtjs/axios",
+    "@nuxtjs/auth",
+    "bootstrap-vue/nuxt",
+    "@nuxtjs/proxy"
   ],
+  axios: {
+    proxy: true
+  },
+  proxy: {
+    '/api/': 'http://localhost:3001/'
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {url: 'http://localhost:3001/api/account/login', method: 'post', propertyName: 'token'},
+          logout: false,
+          user: {url: 'http://localhost:3001/api/account/me', method: 'get'},
+        },
+        /*tokenRequired: true,
+        tokenType: 'Bearer'*/
+      },
+    },
+    redirect: {
+      login: '/',
+      logout: '/',
+      user: false,
+      callback: '/'
+    },
+  },
   /*
   ** Build configuration
   */
