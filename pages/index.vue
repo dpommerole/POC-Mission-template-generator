@@ -84,11 +84,11 @@
               "email": this.$v.form.email.$model,
               "password": this.$v.form.password.$model
             }
-          });
+          })
           
 
             if (this.$auth.loggedIn) {
-              this.$router.push('/home');
+              this.$router.push('/home')
             }
         } catch (e) {
           console.log('Username or Password wrong')
