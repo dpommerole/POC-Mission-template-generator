@@ -6,14 +6,14 @@
       <b-form @submit.stop.prevent="login">
         <b-form-group id="loginEmailGroup">
           <b-form-input
-                  placeholder="email"
-                  id="loginEmail"
-                  name="loginEmail"
-                  type="email"
-                  v-model="$v.form.email.$model"
-                  :state="$v.form.email.$dirty ? !$v.form.email.$error : null"
-                  aria-describedby="loginEmail-live-feedback"
-          ></b-form-input>
+            id="loginEmail"
+            v-model="$v.form.email.$model"
+            placeholder="email"
+            name="loginEmail"
+            type="email"
+            :state="$v.form.email.$dirty ? !$v.form.email.$error : null"
+            aria-describedby="loginEmail-live-feedback"
+          />
 
           <b-form-invalid-feedback id="loginEmail-live-feedback">
             This is a required field and must be a valid email.
@@ -22,21 +22,23 @@
 
         <b-form-group id="loginPasswordGroup">
           <b-form-input
-                  placeholder="password"
-                  id="loginPassword"
-                  type="password"
-                  name="loginPassword"
-                  v-model="$v.form.password.$model"
-                  :state="$v.form.password.$dirty ? !$v.form.password.$error : null"
-                  aria-describedby="loginPassword-live-feedback"
-          ></b-form-input>
+            id="loginPassword"
+            v-model="$v.form.password.$model"
+            placeholder="password"
+            type="password"
+            name="loginPassword"
+            :state="$v.form.password.$dirty ? !$v.form.password.$error : null"
+            aria-describedby="loginPassword-live-feedback"
+          />
 
           <b-form-invalid-feedback id="loginPassword-live-feedback">
             this is a required field.
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-button type="submit" variant="primary" :disabled="$v.form.$invalid">Submit</b-button>
+        <b-button type="submit" variant="primary" :disabled="$v.form.$invalid">
+          Submit
+        </b-button>
       </b-form>
 
       <nuxt-link to="signin">
@@ -47,8 +49,8 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate';
-  import { required, email } from 'vuelidate/lib/validators';
+  import { validationMixin } from 'vuelidate'
+  import { required, email } from 'vuelidate/lib/validators'
 
   export default {
     mixins: [validationMixin],
@@ -76,23 +78,23 @@
     methods: {
       async login() {
         try {
-          console.log('Logging in...');
+          console.log('Logging in...')
           await this.$auth.loginWith('local', {
             data: {
               "email": this.$v.form.email.$model,
               "password": this.$v.form.password.$model
             }
           }).catch(e => {
-            console.log('Failed Logging In');
-          });
+            console.log('Failed Logging In')
+          })
           setTimeout(() => {
             if (this.$auth.loggedIn) {
-              this.$router.push('/home');
-              console.log('Successfully Logging In');
+              this.$router.push('/home')
+              console.log('Successfully Logging In')
             }
-          }, 100);
+          }, 100)
         } catch (e) {
-          console.log('Username or Password wrong');
+          console.log('Username or Password wrong')
         }
       }
     }
