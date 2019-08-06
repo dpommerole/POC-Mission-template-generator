@@ -78,21 +78,18 @@
     methods: {
       async login() {
         try {
-          console.log('Logging in...')
+
           await this.$auth.loginWith('local', {
             data: {
               "email": this.$v.form.email.$model,
               "password": this.$v.form.password.$model
             }
-          }).catch(e => {
-            console.log('Failed Logging In')
-          })
-          setTimeout(() => {
+          });
+          
+
             if (this.$auth.loggedIn) {
-              this.$router.push('/home')
-              console.log('Successfully Logging In')
+              this.$router.push('/home');
             }
-          }, 100)
         } catch (e) {
           console.log('Username or Password wrong')
         }
