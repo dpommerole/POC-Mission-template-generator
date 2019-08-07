@@ -88,7 +88,7 @@
           Submit
         </b-button>
       </b-form>
-      <nuxt-link to="login">
+      <nuxt-link to="/">
         J'ai déjà un compte
       </nuxt-link>
     </div>
@@ -174,5 +174,6 @@
   }
 </script>
 
-<style scoped src="./style.css">
+<style scoped>
+  @import "../style/login_signin.css";
 </style>
