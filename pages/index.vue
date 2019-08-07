@@ -98,5 +98,6 @@
   }
 </script>
 
-<style scoped src="./style.css">
+<style scoped>
+  @import "../style/login_signin.css"
 </style>
