@@ -28,7 +28,9 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/vuelidate', ssr: true }
+    { src: '~/plugins/vuelidate', ssr: true },
+    { src: '~plugins/dragable.js', ssr: false },
+    { src: '~plugins/vue-select.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules
