@@ -3,7 +3,7 @@
     <div class="login--window">
       <h3>HELLO</h3>
 
-      <b-form @submit.stop.prevent="login">
+      <b-form @submit.stop.prevent="doLogin">
         <b-form-group id="loginEmailGroup">
           <b-form-input
             id="loginEmail"
@@ -51,6 +51,7 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, email } from 'vuelidate/lib/validators'
+  import { login } from '@/services/login.service'
 
   export default {
     mixins: [validationMixin],
@@ -74,24 +75,15 @@
         }
       }
     },
-    //middleware: 'notAuthenticated',
     methods: {
-      async login() {
+      async doLogin() {
         try {
-
-          await this.$auth.loginWith('local', {
-            data: {
-              "email": this.$v.form.email.$model,
-              "password": this.$v.form.password.$model
-            }
-          })
-          
-
-            if (this.$auth.loggedIn) {
-              this.$router.push('/home')
-            }
+          this.$router.push(await login({
+            auth: this.$auth, 
+            email: this.$v.form.email.$model , 
+            password: this.$v.form.password.$model}))
         } catch (e) {
-          console.log('Username or Password wrong')
+          console.log(e)
         }
       }
     }
