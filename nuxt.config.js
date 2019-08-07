@@ -31,6 +31,8 @@ export default {
     { src: '~/plugins/vuelidate', ssr: true },
     { src: '~plugins/dragable.js', ssr: false },
     { src: '~plugins/vue-select.js', ssr: false },
+    { src: '~/plugins/jspdf', ssr: false },
+    { src: '~plugins/key.js', ssr: true },
   ],
   /*
   ** Nuxt.js dev-modules
