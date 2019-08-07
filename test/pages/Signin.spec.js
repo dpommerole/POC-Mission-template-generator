@@ -24,6 +24,8 @@ beforeEach(() => {
 
 describe('Signin page', () => {
   it('Should mount properly', () => {
+
+    // Then
     expect(wrapper.exists()).toBe(true)
   })
 })

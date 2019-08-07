@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <div class="login--window">
-      <h3>HELLO</h3>
+      <h3>HELLO</h3><!-- we can use a filter to capitalize this string -->
 
       <b-form @submit.stop.prevent="signIn">
         <b-form-group id="firstNameGroup">
@@ -16,7 +16,7 @@
           />
 
           <b-form-invalid-feedback id="signInFirstName-live-feedback">
-            This is a required field.
+            This is a required field.<!-- next step is to add i18n support -->
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -32,7 +32,7 @@
           />
 
           <b-form-invalid-feedback id="signInLastName-live-feedback">
-            This is a required field.
+            This is a required field.<!-- next step is to add i18n support -->
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -48,7 +48,7 @@
           />
 
           <b-form-invalid-feedback id="signInEmail-live-feedback">
-            This is a required field, must be a valid email and be less than 100 characters.
+            This is a required field, must be a valid email and be less than 100 characters.<!-- next step is to add i18n support -->
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -64,7 +64,7 @@
           />
 
           <b-form-invalid-feedback id="signInPassword-live-feedback">
-            This is a required field.
+            This is a required field.<!-- next step is to add i18n support -->
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -80,22 +80,28 @@
           />
 
           <b-form-invalid-feedback id="signInPasswordConfirm-live-feedback">
-            Passwords must be identical.
+            Passwords must be identical.<!-- next step is to add i18n support -->
           </b-form-invalid-feedback>
         </b-form-group>
 
         <b-button type="submit" variant="primary" :disabled="$v.form.$invalid">
-          Submit
+          Submit<!-- next step is to add i18n support -->
         </b-button>
       </b-form>
       <nuxt-link to="login">
-        J'ai déjà un compte
+        J'ai déjà un compte<!-- next step is to add i18n support -->
       </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
+/*
+  Things to refactor :
+    - remove all IDs from template and replace by class
+    - add store support, and create services to handle the backend resquests
+
+*/
   import { validationMixin } from 'vuelidate'
   import { required, email, sameAs, maxLength } from 'vuelidate/lib/validators'
 
@@ -137,6 +143,11 @@
       }
     },
     methods: {
+      /*
+        the following should be moved in a service,
+        or better, use a store to dispatch an action to
+        update the state.
+      */
       async signIn() {
         const params = {
           firstName: this.$v.form.firstName.$model,
@@ -156,6 +167,11 @@
           console.error('An error occurred.')
         }
       },
+      /*
+        the following should be moved in a service,
+        or better, use a store to dispatch an action to
+        update the state.
+      */
       async logIn() {
         await this.$auth.loginWith('local', {
           data: {
@@ -173,6 +189,3 @@
     }
   }
 </script>
-
-<style scoped src="./style.css">
-</style>

@@ -85,7 +85,7 @@
               "password": this.$v.form.password.$model
             }
           })
-          
+
 
             if (this.$auth.loggedIn) {
               this.$router.push('/home')
@@ -98,5 +98,3 @@
   }
 </script>
 
-<style scoped src="./style.css">
-</style>
