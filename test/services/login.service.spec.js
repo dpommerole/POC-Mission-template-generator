@@ -1,7 +1,7 @@
 import sinonModule from 'sinon'
 import { login } from '@/services/login.service'
 import '@vue/test-utils'
-import { getConsoleOutput } from '@jest/console';
+import { getConsoleOutput } from '@jest/console'
 
 describe('Login Service', () => {
   let sinon
