@@ -1,72 +1,95 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        template-generator-front
-      </h1>
-      <h2 class="subtitle">
-        My bedazzling Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+  <div id="login">
+    <div class="login--window">
+      <h3>HELLO</h3>
+
+      <b-form @submit.stop.prevent="doLogin">
+        <b-form-group id="loginEmailGroup">
+          <b-form-input
+            id="loginEmail"
+            v-model="$v.form.email.$model"
+            placeholder="email"
+            name="loginEmail"
+            type="email"
+            :state="$v.form.email.$dirty ? !$v.form.email.$error : null"
+            aria-describedby="loginEmail-live-feedback"
+          />
+
+          <b-form-invalid-feedback id="loginEmail-live-feedback">
+            This is a required field and must be a valid email.
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group id="loginPasswordGroup">
+          <b-form-input
+            id="loginPassword"
+            v-model="$v.form.password.$model"
+            placeholder="password"
+            type="password"
+            name="loginPassword"
+            :state="$v.form.password.$dirty ? !$v.form.password.$error : null"
+            aria-describedby="loginPassword-live-feedback"
+          />
+
+          <b-form-invalid-feedback id="loginPassword-live-feedback">
+            this is a required field.
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary" :disabled="$v.form.$invalid">
+          Submit
+        </b-button>
+      </b-form>
+
+      <nuxt-link to="signin">
+        Inscription
+      </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+  import { validationMixin } from 'vuelidate'
+  import { required, email } from 'vuelidate/lib/validators'
+  import { login } from '@/services/login.service'
 
-export default {
-  components: {
-    Logo
+  export default {
+    mixins: [validationMixin],
+    data() {
+      return {
+        user: {},
+        form: {
+          email: null,
+          password: null
+        }
+      }
+    },
+    validations: {
+      form: {
+        email: {
+          required,
+          email
+        },
+        password: {
+          required
+        }
+      }
+    },
+    methods: {
+      async doLogin() {
+        try {
+          this.$router.push(await login({
+            auth: this.$auth, 
+            email: this.$v.form.email.$model , 
+            password: this.$v.form.password.$model}))
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
   }
-}
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
+<style scoped>
+  @import "../style/login_signin.css";
 </style>
