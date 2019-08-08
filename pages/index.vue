@@ -52,6 +52,7 @@
   import { validationMixin } from 'vuelidate'
   import { required, email } from 'vuelidate/lib/validators'
   import { login } from '@/services/login.service'
+  import { doToast } from '@/services/toast.service'
 
   export default {
     mixins: [validationMixin],
@@ -78,15 +79,18 @@
     methods: {
       async doLogin() {
         try {
-          this.$router.push(await login({
+          const test = await login({
             auth: this.$auth, 
             email: this.$v.form.email.$model , 
-            password: this.$v.form.password.$model}))
+            password: this.$v.form.password.$model})
+          this.$router.push(test)
         } catch (e) {
-          console.log(e)
-          this.$toasted.show(e.message, { 
-            theme: 'toasted-primary', 
-            position: 'bottom-center', 
+          
+          doToast({
+            toast: this.$toasted,
+            message: 'Bad email and password combinaison',
+            theme: 'toasted-primary',
+            position: 'bottom-center',
             duration : 5000,
           })
         }
