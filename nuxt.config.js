@@ -33,6 +33,7 @@ export default {
     { src: '~plugins/vue-select.js', ssr: false },
     { src: '~/plugins/jspdf', ssr: false },
     { src: '~plugins/key.js', ssr: true },
+    { src: '~plugins/modal.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules
