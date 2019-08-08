@@ -13,6 +13,10 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
+  "pre-commit": [
+    "lintfix",
+    "test"
+  ],
   "dependencies": {
     "@nuxtjs/auth": "^4.8.1",
     "@nuxtjs/axios": "^5.5.4",
@@ -38,6 +42,7 @@
     "babel-jest": "^24.1.0",
     "eslint": "^6.1.0",
     "jest": "^24.1.0",
+    "pre-commit": "^1.2.2",
     "vue-jest": "^4.0.0-0"
   }
 }

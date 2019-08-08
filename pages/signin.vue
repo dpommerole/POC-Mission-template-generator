@@ -96,79 +96,79 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { required, email, sameAs, maxLength } from 'vuelidate/lib/validators'
-  import { login } from '@/services/login.service'
+import { validationMixin } from 'vuelidate'
+import { required, email, sameAs, maxLength } from 'vuelidate/lib/validators'
+import { login } from '@/services/login.service'
 
-  export default {
-    mixins: [validationMixin],
-    auth: false,
-    data() {
-      return {
-        user: {},
-        form: {
-          firstName: null,
-          lastName: null,
-          email: null,
-          password: null,
-          passwordConfirm: null
-        }
-      }
-    },
-    validations: {
+export default {
+  mixins: [validationMixin],
+  auth: false,
+  data () {
+    return {
+      user: {},
       form: {
-        firstName: {
-          required
-        },
-        lastName: {
-          required
-        },
-        email: {
-          required,
-          email,
-          maxLength: maxLength(99)
-        },
-        password: {
-          required
-        },
-        passwordConfirm: {
-          required,
-          sameAsPassword: sameAs('password')
-        }
+        firstName: null,
+        lastName: null,
+        email: null,
+        password: null,
+        passwordConfirm: null
+      }
+    }
+  },
+  validations: {
+    form: {
+      firstName: {
+        required
+      },
+      lastName: {
+        required
+      },
+      email: {
+        required,
+        email,
+        maxLength: maxLength(99)
+      },
+      password: {
+        required
+      },
+      passwordConfirm: {
+        required,
+        sameAsPassword: sameAs('password')
+      }
+    }
+  },
+  methods: {
+    async signIn () {
+      const params = {
+        firstName: this.$v.form.firstName.$model,
+        lastName: this.$v.form.lastName.$model,
+        email: this.$v.form.email.$model,
+        password: this.$v.form.password.$model
+      }
+
+      try {
+        await this.$axios.post('/api/account/register', { params })
+          .then(response => {
+            this.user = response.data.user
+
+            this.doLogin()
+          })
+      } catch {
+        console.error('An error occurred.')
       }
     },
-    methods: {
-      async signIn() {
-        const params = {
-          firstName: this.$v.form.firstName.$model,
-          lastName: this.$v.form.lastName.$model,
-          email: this.$v.form.email.$model,
-          password: this.$v.form.password.$model
-        }
-
-        try {
-          await this.$axios.post('/api/account/register', { params })
-            .then(response => {
-              this.user = response.data.user
-
-              this.doLogin()
-            })
-        } catch {
-          console.error('An error occurred.')
-        }
-      },
-      async doLogin() {
-        try {
-          this.$router.push(await login({
-            auth: this.$auth, 
-            email: this.user.email, 
-            password: this.$v.form.password.$model}))
-        } catch (e) {
-          console.log(e)
-        }
+    async doLogin () {
+      try {
+        this.$router.push(await login({
+          auth: this.$auth,
+          email: this.user.email,
+          password: this.$v.form.password.$model }))
+      } catch (e) {
+        console.log(e)
       }
     }
   }
+}
 </script>
 
 <style scoped>
