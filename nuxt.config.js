@@ -34,6 +34,7 @@ export default {
     { src: '~plugins/vue-select.js', ssr: false },
     { src: '~/plugins/jspdf', ssr: false },
     { src: '~plugins/key.js', ssr: true },
+    { src: '~plugins/modal.js', ssr: false },
   ],
   env: {
     ENVIRONMENT: process.env.NODE_ENV
