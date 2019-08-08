@@ -1,3 +1,4 @@
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -30,8 +31,11 @@ export default {
   plugins: [
     { src: '~/plugins/vuelidate', ssr: true },
     { src: '~plugins/dragable.js', ssr: false },
-    { src: '~plugins/vue-select.js', ssr: false },
+    { src: '~plugins/vue-select.js', ssr: false }
   ],
+  env: {
+    ENVIRONMENT: process.env.NODE_ENV
+  },
   /*
   ** Nuxt.js dev-modules
   */
