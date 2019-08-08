@@ -5,31 +5,30 @@ const $mapMarkerIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCA
 const $atecnaLogo = 'data:image/png;base64,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'
 const $imageFallback = 'https://upload.wikimedia.org/wikipedia/commons/2/20/Point_d_interrogation.jpg'
 
-export async function makePDF(mission) {
+export async function makePDF (mission) {
   if (process.browser) {
-    const jsPDF = require('jspdf')
-    const doc = new jsPDF("l", "pt", [1204, 1080])
+    const JsPDF = require('jspdf')
+    const doc = new JsPDF('l', 'pt', [1204, 1080])
 
     if (mission.image) {
-      convertImgToDataURLviaCanvas(mission.image, await function(result) {
+      convertImgToDataURLviaCanvas(mission.image, await function (result) {
         mission.image = result
       }, 'image/png')
     }
 
     if (mission.logoGroup) {
-      convertImgToDataURLviaCanvas(mission.logoGroup, await function(result) {
+      convertImgToDataURLviaCanvas(mission.logoGroup, await function (result) {
         mission.logoGroup = result
       }, 'image/png')
     }
 
     if (mission.logoClient) {
-      convertImgToDataURLviaCanvas(mission.logoClient, await function(result) {
+      convertImgToDataURLviaCanvas(mission.logoClient, await function (result) {
         mission.logoClient = result
       }, 'image/png')
     }
 
     if (mission.environments && mission.environments.length > 0) {
-
       for (let i = 0; i < mission.environments.length; i++) {
         if (mission.environments[i].logo) {
           convertImgToDataURLviaCanvas(mission.environments[i].logo, await function (result) {
@@ -50,8 +49,6 @@ export async function makePDF(mission) {
     }
 
     setTimeout(() => {
-
-
       // SET background
       doc.setDrawColor(0)
       doc.setFillColor(241, 196, 15)
@@ -65,8 +62,8 @@ export async function makePDF(mission) {
       // add mission.category
       doc.setDrawColor(0)
       doc.setFillColor(47, 54, 64)
-      const widthMission = getTextWidth('#' + mission.category, "bold 12pt arial") + 10
-      const widthCategory = getTextWidth('#' + mission.category, "bold 12pt arial") + 10
+      const widthMission = getTextWidth('#' + mission.category, 'bold 12pt arial') + 10
+      const widthCategory = getTextWidth('#' + mission.category, 'bold 12pt arial') + 10
       doc.roundedRect(130 - (widthMission / 2), 176, widthMission, 24, 3, 3, 'FD')
       doc.roundedRect(220 - (widthCategory / 2) + 10, 176, widthCategory, 24, 3, 3, 'FD')
 
@@ -80,7 +77,7 @@ export async function makePDF(mission) {
       doc.addImage($cartIcon, 'JPEG', 35, 247, 20, 20)
       const saveFontSize = doc.getFontSize()
       let fontSize = saveFontSize
-      while (getTextWidth(mission.type, "bold " + fontSize + "pt arial") > 90) {
+      while (getTextWidth(mission.type, 'bold ' + fontSize + 'pt arial') > 90) {
         fontSize--
       }
       doc.setFontSize(fontSize)
@@ -90,7 +87,7 @@ export async function makePDF(mission) {
 
       doc.circle(135, 257, 25, 'F')
       doc.addImage($calendarIcon, 'JPEG', 125, 247, 20, 20)
-      while (getTextWidth(mission.duration, "bold " + fontSize + "pt arial") > 90) {
+      while (getTextWidth(mission.duration, 'bold ' + fontSize + 'pt arial') > 90) {
         fontSize -= 0.5
       }
       doc.setFontSize(fontSize)
@@ -100,7 +97,7 @@ export async function makePDF(mission) {
 
       doc.circle(225, 257, 25, 'F')
       doc.addImage($userIcon, 'JPEG', 215, 247, 20, 20)
-      while (getTextWidth('' + mission.teamSize, "bold " + fontSize + "pt arial") > 90) {
+      while (getTextWidth('' + mission.teamSize, 'bold ' + fontSize + 'pt arial') > 90) {
         fontSize -= 0.5
       }
       doc.setFontSize(fontSize)
@@ -110,7 +107,7 @@ export async function makePDF(mission) {
 
       doc.circle(315, 257, 25, 'F')
       doc.addImage($mapMarkerIcon, 'JPEG', 305, 247, 20, 20)
-      while (getTextWidth(mission.location, "bold " + fontSize + "pt arial") > 90) {
+      while (getTextWidth(mission.location, 'bold ' + fontSize + 'pt arial') > 90) {
         fontSize -= 0.5
       }
       doc.setFontSize(fontSize)
@@ -121,7 +118,7 @@ export async function makePDF(mission) {
       // Environments
       doc.setDrawColor(0)
       doc.setFillColor(47, 54, 64)
-      const widthEnv = getTextWidth('#Environement', "bold 12pt arial") + 10
+      const widthEnv = getTextWidth('#Environement', 'bold 12pt arial') + 10
       doc.roundedRect(180 - (widthEnv / 2), 354, widthEnv, 24, 3, 3, 'FD')
       doc.setTextColor(255, 255, 255)
       doc.text('#Environement', 180, 372, 'center')
@@ -135,7 +132,6 @@ export async function makePDF(mission) {
       let row = 0
       let column = 0
       for (let i = 0; i < mission.environments.length; i++) {
-
         doc.circle(baseWidth + (90 * column), baseHeight + (122 * row), 25, 'F')
         doc.addImage(mission.environments[i].logo,
           'JPEG', (baseWidth - 25) + (90 * column), (baseHeight - 25) + (122 * row), 50, 50)
@@ -153,7 +149,7 @@ export async function makePDF(mission) {
         doc.circle(baseWidth + (90 * column), baseHeight + (122 * row), 35)
         doc.setLineWidth(1)
 
-        while (getTextWidth('' + mission.environments[i].name, "bold " + fontSize + "pt arial") > 90) {
+        while (getTextWidth('' + mission.environments[i].name, 'bold ' + fontSize + 'pt arial') > 90) {
           fontSize -= 0.5
         }
         doc.setFontSize(fontSize)
@@ -187,7 +183,7 @@ export async function makePDF(mission) {
       row = 0
       let tmpContext = mission.context.split(' ')
       while (tmpContext && tmpContext[0]) {
-        if (getTextWidth('' + tmpContext[0], "bold " + 12 + "pt arial") > 370) {
+        if (getTextWidth('' + tmpContext[0], 'bold ' + 12 + 'pt arial') > 370) {
           doc.text(tmpContext[0], 377, 247 + (24 * row), 'justify')
           tmpContext.shift()
           row += 1
@@ -200,7 +196,6 @@ export async function makePDF(mission) {
             tmpContext.shift()
           }
         }
-
       }
 
       doc.save('sample.pdf')
@@ -208,10 +203,9 @@ export async function makePDF(mission) {
   }
 }
 
-function getTextWidth(text, font) {
-
+function getTextWidth (text, font) {
   let element = document.createElement('canvas')
-  let context = element.getContext("2d")
+  let context = element.getContext('2d')
   if (context) {
     context.font = font
     return context.measureText(text).width
@@ -223,7 +217,7 @@ function getTextWidth(text, font) {
 const convertImgToDataURLviaCanvas = async (url, callback, outputFormat) => {
   let img = new Image()
   img.crossOrigin = 'anonymous'
-  img.onload = await function() {
+  img.onload = await function () {
     let canvas = document.createElement('canvas')
     let ctx = canvas.getContext('2d')
     let dataURL

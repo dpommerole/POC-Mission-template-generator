@@ -49,45 +49,45 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { required, email } from 'vuelidate/lib/validators'
-  import { login } from '@/services/login.service'
+import { validationMixin } from 'vuelidate'
+import { required, email } from 'vuelidate/lib/validators'
+import { login } from '@/services/login.service'
 
-  export default {
-    mixins: [validationMixin],
-    data() {
-      return {
-        user: {},
-        form: {
-          email: null,
-          password: null
-        }
-      }
-    },
-    validations: {
+export default {
+  mixins: [validationMixin],
+  data () {
+    return {
+      user: {},
       form: {
-        email: {
-          required,
-          email
-        },
-        password: {
-          required
-        }
+        email: null,
+        password: null
       }
-    },
-    methods: {
-      async doLogin() {
-        try {
-          this.$router.push(await login({
-            auth: this.$auth, 
-            email: this.$v.form.email.$model , 
-            password: this.$v.form.password.$model}))
-        } catch (e) {
-          console.log(e)
-        }
+    }
+  },
+  validations: {
+    form: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required
+      }
+    }
+  },
+  methods: {
+    async doLogin () {
+      try {
+        this.$router.push(await login({
+          auth: this.$auth,
+          email: this.$v.form.email.$model,
+          password: this.$v.form.password.$model }))
+      } catch (e) {
+        console.log(e)
       }
     }
   }
+}
 </script>
 
 <style scoped>

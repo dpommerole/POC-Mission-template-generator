@@ -311,158 +311,156 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { url } from 'vuelidate/lib/validators'
-  import draggable from 'vuedraggable'
-  import 'vue-select/dist/vue-select.css'
+import { validationMixin } from 'vuelidate'
+import { url } from 'vuelidate/lib/validators'
+import draggable from 'vuedraggable'
+import 'vue-select/dist/vue-select.css'
 
-  let id = 1
-
-  export default {
-    components: {
-      draggable
-    },
-    mixins: [validationMixin],
-    data() {
-      return {
-        form: {
-          name: null,
-          image: null,
-          logoGroup: null,
-          logoClient: null,
-          nameGroup: null,
-          nameClient: null,
-          webSite: null,
-          context: null,
-          livrable: null,
-          atecnaPlus: null,
-          category: null,
-          type: null,
-          duration: null,
-          teamSize: null,
-          location: null,
-          environments: []
-        },
-        environments: [],
-        list: [],
-        selected: null,
-        dragging: true,
-        componentData: {
-          props: {
-            type: "transition",
-            name: "flip-list"
-          }
-        }
-      }
-    },
-    validations: {
+export default {
+  components: {
+    draggable
+  },
+  mixins: [validationMixin],
+  data () {
+    return {
       form: {
-        name: {
-
-        },
-        image: {
-          url
-        },
-        logoGroup: {
-          url
-        },
-        logoClient: {
-          url
-        },
-        nameGroup: {
-
-        },
-        nameClient: {
-
-        },
-        webSite: {
-
-        },
-        context: {
-
-        },
-        livrable: {
-
-        },
-        atecnaPlus: {
-
-        },
-        category: {
-
-        },
-        type: {
-
-        },
-        duration: {
-
-        },
-        teamSize: {
-
-        },
-        location: {
-
-        },
-        environments: {
-
-        }
-      }
-    },
-    mounted() {
-      const params = {
-        token: this.$auth.getToken('local')
-      }
-
-      this.$axios.get('/api/environment/getAll', { params })
-        .then(response => {
-          console.log('response = ', response.data.environments)
-          this.environments = response.data.environments
-        })
-    },
-    methods: {
-      addToDrop: function(param) {
-        if (param.length > 0) {
-          if (this.list.filter(c => c.name === param[param.length - 1].name).length === 0) {
-            this.list.push(param[param.length - 1])
-          }
-        }
+        name: null,
+        image: null,
+        logoGroup: null,
+        logoClient: null,
+        nameGroup: null,
+        nameClient: null,
+        webSite: null,
+        context: null,
+        livrable: null,
+        atecnaPlus: null,
+        category: null,
+        type: null,
+        duration: null,
+        teamSize: null,
+        location: null,
+        environments: []
       },
-      async createMission() {
-        const params = {
-          name: this.$v.form.name.$model,
-          image: this.$v.form.image.$model,
-          logoGroup: this.$v.form.logoGroup.$model,
-          logoClient: this.$v.form.logoClient.$model,
-          nameGroup: this.$v.form.nameGroup.$model,
-          nameClient: this.$v.form.nameClient.$model,
-          webSite: this.$v.form.webSite.$model,
-          context: this.$v.form.context.$model,
-          livrable: this.$v.form.livrable.$model,
-          atecnaPlus: this.$v.form.atecnaPlus.$model,
-          category: this.$v.form.category.$model,
-          type: this.$v.form.type.$model,
-          duration: this.$v.form.duration.$model,
-          teamSize: this.$v.form.teamSize.$model,
-          location: this.$v.form.location.$model,
-          environments: this.list,
-          userId: this.$auth.user.id,
-          token: this.$auth.getToken('local')
-        }
-
-        console.log('params = ', params)
-
-        try {
-          await this.$axios.post('/api/mission/createOne', params)
-            .then(response => {
-              console.log('response = ', response)
-              console.log('response = ', response.data.mission)
-              this.$router.push({ path: '/mission', query: { id: response.data.mission.missionId } })
-            })
-        } catch {
-          console.log('An error occurred.')
+      environments: [],
+      list: [],
+      selected: null,
+      dragging: true,
+      componentData: {
+        props: {
+          type: 'transition',
+          name: 'flip-list'
         }
       }
     }
+  },
+  validations: {
+    form: {
+      name: {
+
+      },
+      image: {
+        url
+      },
+      logoGroup: {
+        url
+      },
+      logoClient: {
+        url
+      },
+      nameGroup: {
+
+      },
+      nameClient: {
+
+      },
+      webSite: {
+
+      },
+      context: {
+
+      },
+      livrable: {
+
+      },
+      atecnaPlus: {
+
+      },
+      category: {
+
+      },
+      type: {
+
+      },
+      duration: {
+
+      },
+      teamSize: {
+
+      },
+      location: {
+
+      },
+      environments: {
+
+      }
+    }
+  },
+  mounted () {
+    const params = {
+      token: this.$auth.getToken('local')
+    }
+
+    this.$axios.get('/api/environment/getAll', { params })
+      .then(response => {
+        console.log('response = ', response.data.environments)
+        this.environments = response.data.environments
+      })
+  },
+  methods: {
+    addToDrop: function (param) {
+      if (param.length > 0) {
+        if (this.list.filter(c => c.name === param[param.length - 1].name).length === 0) {
+          this.list.push(param[param.length - 1])
+        }
+      }
+    },
+    async createMission () {
+      const params = {
+        name: this.$v.form.name.$model,
+        image: this.$v.form.image.$model,
+        logoGroup: this.$v.form.logoGroup.$model,
+        logoClient: this.$v.form.logoClient.$model,
+        nameGroup: this.$v.form.nameGroup.$model,
+        nameClient: this.$v.form.nameClient.$model,
+        webSite: this.$v.form.webSite.$model,
+        context: this.$v.form.context.$model,
+        livrable: this.$v.form.livrable.$model,
+        atecnaPlus: this.$v.form.atecnaPlus.$model,
+        category: this.$v.form.category.$model,
+        type: this.$v.form.type.$model,
+        duration: this.$v.form.duration.$model,
+        teamSize: this.$v.form.teamSize.$model,
+        location: this.$v.form.location.$model,
+        environments: this.list,
+        userId: this.$auth.user.id,
+        token: this.$auth.getToken('local')
+      }
+
+      console.log('params = ', params)
+
+      try {
+        await this.$axios.post('/api/mission/createOne', params)
+          .then(response => {
+            console.log('response = ', response)
+            console.log('response = ', response.data.mission)
+            this.$router.push({ path: '/mission', query: { id: response.data.mission.missionId } })
+          })
+      } catch {
+        console.log('An error occurred.')
+      }
+    }
   }
+}
 </script>
 
 <style scoped>

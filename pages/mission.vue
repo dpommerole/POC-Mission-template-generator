@@ -104,44 +104,43 @@
 </template>
 
 <script>
-  const utils = require('../store/utils')
+const utils = require('../store/utils')
 
-  export default {
-    data() {
-      return {
-        mission: {},
-        logoCart: this.$cartIcon,
-        logoCalendar: this.$calendarIcon,
-        logoUser: this.$userIcon,
-        logoMapMarker: this.$mapMarkerIcon,
-        logoAtecna: this.$atecnaLogo
-      }
+export default {
+  data () {
+    return {
+      mission: {},
+      logoCart: this.$cartIcon,
+      logoCalendar: this.$calendarIcon,
+      logoUser: this.$userIcon,
+      logoMapMarker: this.$mapMarkerIcon,
+      logoAtecna: this.$atecnaLogo
+    }
+  },
+  mounted () {
+    console.log('params = ', this.$route.query.id)
+    const params = {
+      id: this.$route.query.id,
+      token: this.$auth.getToken('local')
+    }
+
+    this.$axios.get('/api/mission/getOne', { params })
+      .then(response => {
+        this.mission = response.data.mission
+      })
+  },
+  methods: {
+    edit () {
+
     },
-    mounted() {
-
-      console.log('params = ', this.$route.query.id)
-      const params = {
-        id: this.$route.query.id,
-        token: this.$auth.getToken('local')
-      }
-
-      this.$axios.get('/api/mission/getOne', { params })
-        .then(response => {
-          this.mission = response.data.mission
-        })
+    imgUrlAlt (event) {
+      event.target.src = this.$imageFallback
     },
-    methods: {
-      edit() {
-
-      },
-      imgUrlAlt(event) {
-        event.target.src = this.$imageFallback
-      },
-      downloadWithCSS() {
-        utils.makePDF(this.mission)
-      }
+    downloadWithCSS () {
+      utils.makePDF(this.mission)
     }
   }
+}
 </script>
 
 <style>

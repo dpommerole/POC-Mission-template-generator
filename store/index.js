@@ -15,7 +15,7 @@ const stores = {
 const modules = Object.entries(stores).reduce((_modules, [name, store]) => {
   _modules[name] = {
     namespaced: true,
-    ...store,
+    ...store
   }
   return _modules
 }, {})
@@ -26,6 +26,5 @@ export const $store = new Vuex.Store({
   mutations,
   actions,
   modules,
-  strict: process.env.ENVIRONMENT !== 'production',
+  strict: process.env.ENVIRONMENT !== 'production'
 })
-
