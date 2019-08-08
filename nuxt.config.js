@@ -1,3 +1,4 @@
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -35,6 +36,9 @@ export default {
     { src: '~plugins/key.js', ssr: true },
     { src: '~plugins/modal.js', ssr: false },
   ],
+  env: {
+    ENVIRONMENT: process.env.NODE_ENV
+  },
   /*
   ** Nuxt.js dev-modules
   */

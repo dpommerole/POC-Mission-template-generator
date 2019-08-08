@@ -2,7 +2,7 @@ export const login = async ({auth, email, password}) => {
     await auth.loginWith('local', {
         data: {
           'email': email,
-          'password': password
+          'password': password,
         }
       })
 
