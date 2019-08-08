@@ -12,7 +12,7 @@ describe('Login Service', () => {
   const password = 'calogero'
 
   beforeEach(() => {
-    sinon = sinonModule.sandbox.create()
+    sinon = sinonModule.createSandbox()
   })
 
   afterEach(() => {
