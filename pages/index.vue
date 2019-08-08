@@ -84,6 +84,11 @@
             password: this.$v.form.password.$model}))
         } catch (e) {
           console.log(e)
+          this.$toasted.show(e.message, { 
+            theme: 'toasted-primary', 
+            position: 'bottom-center', 
+            duration : 5000,
+          })
         }
       }
     }
@@ -91,5 +96,5 @@
 </script>
 
 <style scoped>
-  @import "../style/login_signin.css";
+  @import "@/style/login_signin.css";
 </style>

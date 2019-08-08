@@ -172,5 +172,5 @@
 </script>
 
 <style scoped>
-  @import "../style/login_signin.css";
+  @import "@/style/login_signin.css";
 </style>
