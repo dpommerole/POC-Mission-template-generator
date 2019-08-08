@@ -98,6 +98,7 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, email, sameAs, maxLength } from 'vuelidate/lib/validators'
+  import { login } from '@/services/login.service'
 
   export default {
     mixins: [validationMixin],
@@ -150,25 +151,21 @@
             .then(response => {
               this.user = response.data.user
 
-              this.logIn()
+              this.doLogin()
             })
         } catch {
           console.error('An error occurred.')
         }
       },
-      async logIn() {
-        await this.$auth.loginWith('local', {
-          data: {
-            "email": this.user.email,
-            "password": this.$v.form.password.$model
-          }
-        }).catch(e => {
-          console.error('Failed Logging In')
-        })
-
-          if (this.$auth.loggedIn) {
-            this.$router.push('/home')
-          }
+      async doLogin() {
+        try {
+          this.$router.push(await login({
+            auth: this.$auth, 
+            email: this.user.email, 
+            password: this.$v.form.password.$model}))
+        } catch (e) {
+          console.log(e)
+        }
       }
     }
   }
