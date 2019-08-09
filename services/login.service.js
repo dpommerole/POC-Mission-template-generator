@@ -12,4 +12,3 @@ export const login = async ({auth, email, password}) => {
 
       throw ('Veuillez retenter')
 }
-  
