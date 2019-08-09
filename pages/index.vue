@@ -78,14 +78,19 @@
     },
     methods: {
       async doLogin() {
+        console.log('coucou1');
         try {
+          console.log('coucou2');
           const loggedRoute = await login({
             auth: this.$auth, 
             email: this.$v.form.email.$model , 
             password: this.$v.form.password.$model})
+            console.log('coucou3');
           this.$router.push(loggedRoute)
+          console.log('coucou4');
         } catch (e) {
           
+          console.log('coucou5');
           generateToastNotification({
             toast: this.$toasted,
             message: 'Bad email and password combinaison',
