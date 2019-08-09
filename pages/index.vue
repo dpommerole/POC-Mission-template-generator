@@ -79,14 +79,14 @@
     methods: {
       async doLogin() {
         try {
-          const test = await login({
+          const loggedRoute = await login({
             auth: this.$auth, 
             email: this.$v.form.email.$model , 
             password: this.$v.form.password.$model})
-          this.$router.push(test)
+          this.$router.push(loggedRoute)
         } catch (e) {
           
-          doToast({
+          generateToastNotification({
             toast: this.$toasted,
             message: 'Bad email and password combinaison',
             theme: 'toasted-primary',
