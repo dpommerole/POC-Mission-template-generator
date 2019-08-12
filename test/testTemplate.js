@@ -36,7 +36,7 @@ describe('Context of the test', () => {
   }
 
   beforeEach(async () => {
-    sinon = sinonModule.sandbox.create()
+    sinon = sinonModule.createSandbox()
 
     // instanciate stubs
     $router = { push: sinon.stub() }
