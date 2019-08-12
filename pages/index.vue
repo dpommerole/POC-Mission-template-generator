@@ -3,7 +3,7 @@
     <div class="login--window">
       <h3>HELLO</h3>
 
-      <b-form id="formLogin" @submit.stop.prevent="doLogin">
+      <b-form id="formLogin">
         <b-form-group id="loginEmailGroup">
           <b-form-input
             id="loginEmail"
@@ -36,7 +36,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">
+        <b-button @click="doLogin" variant="primary" id="loginButton">
           Submit
         </b-button>
       </b-form>
@@ -78,6 +78,7 @@
     },
     methods: {
       async doLogin() {
+        debugger
         console.log('coucou1')
         try {
           console.log('coucou2')
@@ -91,7 +92,7 @@
         } catch (e) {
 
           console.log('coucou5')
-          generateToastNotification({
+          doToast({
             toast: this.$toasted,
             message: 'Bad email and password combinaison',
             theme: 'toasted-primary',

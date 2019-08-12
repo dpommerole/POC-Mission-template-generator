@@ -9,12 +9,6 @@ describe('Index', () => {
 
     let sinon
     let $router
-    let auth = {
-        loginWith: () => {
-        },
-        loggedIn: false,
-    }
-
     let wrapper
 
     beforeEach(() => {
@@ -28,12 +22,7 @@ describe('Index', () => {
                 $router,
             },
             stubs: {
-                'b-form' : true,
-                'b-form-group': true,
-                'b-form-input': true,
-                'b-form-invalid-feedback': true,
                 'b-button': true,
-                'nuxt-link': true,
             },
             propsData: {
                 user: {},
@@ -53,11 +42,8 @@ describe('Index', () => {
     it('Should return login success', async () => {
         wrapper.vm.form.email = 'toto@toto.fr'
         wrapper.vm.form.password = 'test'
-        wrapper.vm.form.auth = auth
 
-        // this.$el.submit();
-        // console.log('test = ', wrapper.find('#formLogin').vm);
-        wrapper.find('#formLogin').trigger('submit')
+        wrapper.find('#loginButton').vm.$emit('click')
 
         await Vue.nextTick()
 
