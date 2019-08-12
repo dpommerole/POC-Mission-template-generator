@@ -3,7 +3,7 @@
     <div class="login--window">
       <h3>HELLO</h3>
 
-      <b-form @submit.stop.prevent="doLogin">
+      <b-form id="formLogin" @submit.stop.prevent="doLogin">
         <b-form-group id="loginEmailGroup">
           <b-form-input
             id="loginEmail"
@@ -36,7 +36,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-button type="submit" variant="primary" :disabled="$v.form.$invalid">
+        <b-button type="submit" variant="primary">
           Submit
         </b-button>
       </b-form>
@@ -78,19 +78,19 @@
     },
     methods: {
       async doLogin() {
-        console.log('coucou1');
+        console.log('coucou1')
         try {
-          console.log('coucou2');
+          console.log('coucou2')
           const loggedRoute = await login({
-            auth: this.$auth, 
-            email: this.$v.form.email.$model , 
+            auth: this.$auth,
+            email: this.$v.form.email.$model ,
             password: this.$v.form.password.$model})
-            console.log('coucou3');
+            console.log('coucou3')
           this.$router.push(loggedRoute)
-          console.log('coucou4');
+          console.log('coucou4')
         } catch (e) {
-          
-          console.log('coucou5');
+
+          console.log('coucou5')
           generateToastNotification({
             toast: this.$toasted,
             message: 'Bad email and password combinaison',
