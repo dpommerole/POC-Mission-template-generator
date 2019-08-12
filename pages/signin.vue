@@ -3,7 +3,7 @@
     <div class="login--window">
       <h3>HELLO</h3>
 
-      <b-form @submit.stop.prevent="signIn">
+      <b-form id="formSignIn">
         <b-form-group id="firstNameGroup">
           <b-form-input
             id="signInFirstName"
@@ -84,7 +84,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-button type="submit" variant="primary" :disabled="$v.form.$invalid">
+        <b-button id="signInButton" variant="primary" :disabled="$v.form.$invalid" @click="signIn">
           Submit
         </b-button>
       </b-form>
@@ -149,24 +149,21 @@ export default {
       }
 
       try {
-
-        const signInResponse = axiosPost(
-        {
-          axios: this.$axios,
-          url: '/api/account/register',
-          params
-        })
-
+        const signInResponse = await axiosPost(
+          {
+            axios: this.$axios,
+            url: '/api/account/register',
+            params
+          })
         this.user = signInResponse.data.user
         this.doLogin()
-
       } catch {
         generateToastNotification({
           toast: this.$toasted,
           message: 'An error occured with the server',
           theme: 'toasted-primary',
           position: 'bottom-center',
-          duration: 5000,
+          duration: 5000
         })
       }
     },
@@ -180,10 +177,10 @@ export default {
       } catch (e) {
         generateToastNotification({
           toast: this.$toasted,
-          message: 'An error occured with the server',
+          message: 'Log in to home has failed',
           theme: 'toasted-primary',
           position: 'bottom-center',
-          duration: 5000,
+          duration: 5000
         })
       }
     }
