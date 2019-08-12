@@ -99,6 +99,8 @@
 import { validationMixin } from 'vuelidate'
 import { required, email, sameAs, maxLength } from 'vuelidate/lib/validators'
 import { login } from '@/services/login.service'
+import { axiosPost } from '@/services/backend.service'
+import { generateToastNotification } from '@/services/toast.service'
 
 export default {
   mixins: [validationMixin],
@@ -147,24 +149,42 @@ export default {
       }
 
       try {
-        await this.$axios.post('/api/account/register', { params })
-          .then(response => {
-            this.user = response.data.user
 
-            this.doLogin()
-          })
+        const signInResponse = axiosPost(
+        {
+          axios: this.$axios,
+          url: '/api/account/register',
+          params
+        })
+
+        this.user = signInResponse.data.user
+        this.doLogin()
+
       } catch {
-        console.error('An error occurred.')
+        generateToastNotification({
+          toast: this.$toasted,
+          message: 'An error occured with the server',
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000,
+        })
       }
     },
     async doLogin () {
       try {
-        this.$router.push(await login({
+        const loggedRoute = await login({
           auth: this.$auth,
           email: this.user.email,
-          password: this.$v.form.password.$model }))
+          password: this.$v.form.password.$model })
+        this.$router.push(loggedRoute)
       } catch (e) {
-        console.log(e)
+        generateToastNotification({
+          toast: this.$toasted,
+          message: 'An error occured with the server',
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000,
+        })
       }
     }
   }
