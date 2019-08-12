@@ -1,5 +1,5 @@
 <template>
-  <b-form-group :id="id + 'Group'">
+  <b-form-group :id="`${id}Group`">
     <b-form-input
       :id="id"
       v-model="model.$model"
