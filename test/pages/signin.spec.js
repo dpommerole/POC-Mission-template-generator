@@ -48,9 +48,9 @@ describe('SignIn', () => {
 
   it('Should return register success', async () => {
     axiosPostStub.resolves({
-        data: {
-            user: {}
-        }
+      data: {
+        user: {}
+      }
     })
     wrapper.find('#signInButton').vm.$emit('click')
     loginStub.resolves('/home')
@@ -59,9 +59,9 @@ describe('SignIn', () => {
   })
 
   it('Should generate Toast notification in case of bad register', async () => {
-      axiosPostStub.throws()
-      wrapper.find('#signInButton').vm.$emit('click')
-      expect($toasted.show.called).toBe(true)
+    axiosPostStub.throws()
+    wrapper.find('#signInButton').vm.$emit('click')
+    expect($toasted.show.called).toBe(true)
   })
 
   it('Should generate Toast notification in case of bad redirection after register', async () => {
