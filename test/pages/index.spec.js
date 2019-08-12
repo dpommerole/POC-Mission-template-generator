@@ -4,22 +4,27 @@ import sinonModule from 'sinon'
 import Index from '@/pages/index.vue'
 import * as loginService from '@/services/login.service'
 import Vue from 'vue'
+import { generateToastNotification } from '../../services/toast.service';
 
 describe('Index', () => {
 
     let sinon
     let $router
+    let $toasted
     let wrapper
+    let loginStub
 
     beforeEach(() => {
         sinon = sinonModule.createSandbox()
 
-        sinon.stub(loginService, 'login').resolves('/home')
+        loginStub = sinon.stub(loginService, 'login')
         $router = {push: sinon.stub()}
+        $toasted = {show: sinon.stub()}
 
         wrapper = shallowMount(Index, {
             mocks: {
                 $router,
+                $toasted,
             },
             stubs: {
                 'b-button': true,
@@ -45,6 +50,7 @@ describe('Index', () => {
 
 
     it('Should return login success', async () => {
+        loginStub.resolves('/home')
         wrapper.vm.form.email = 'toto@toto.fr'
         wrapper.vm.form.password = 'test'
 
@@ -55,7 +61,16 @@ describe('Index', () => {
         expect($router.push.withArgs('/home').called).toBe(true)
     }),
 
-    it.skip('Generate Toast notification in case of bad login', () => {
+    it('Generate Toast notification in case of bad login', async () => {
+        loginStub.throws('eror')
 
+        wrapper.vm.form.email = 'toto@toto.fr'
+        wrapper.vm.form.password = 'test'
+
+        wrapper.find('#loginButton').vm.$emit('click')
+
+        await Vue.nextTick()
+
+        expect($toasted.show.called).toBe(true)
     })
 })
