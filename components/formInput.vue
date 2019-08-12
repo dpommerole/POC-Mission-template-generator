@@ -25,7 +25,7 @@ export default {
       },
       model: {
         type: Object,
-        default: () => ''
+        default: () => {}
       },
       placeholder: {
         type: String,
