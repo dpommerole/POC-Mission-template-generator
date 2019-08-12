@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { axiosGet } from '../services/backend.service'
+import { axiosGet } from '@/services/backend.service'
 
 export default {
   data () {
