@@ -5,20 +5,20 @@
 
       <b-form id="formLogin">
         <form-input 
-        id="loginEmail"
-        :model="$v.form.email"
-        placeholder="email"
-        type="email"
-        message="This is a required field and must be a valid email."
-        ></form-input>
+          id="loginEmail"
+          :model="$v.form.email"
+          placeholder="email"
+          type="email"
+          message="This is a required field and must be a valid email."
+        />
         
         <form-input 
-        id="loginPassword"
-        :model="$v.form.password"
-        placeholder="password"
-        type="password"
-        message="This is a required field."
-        ></form-input>
+          id="loginPassword"
+          :model="$v.form.password"
+          placeholder="password"
+          type="password"
+          message="This is a required field."
+        />
 
         <b-button id="loginButton" variant="primary" @click="doLogin">
           Submit
@@ -37,7 +37,7 @@
   import { required, email } from 'vuelidate/lib/validators'
   import { login } from '@/services/login.service'
   import { generateToastNotification } from '@/services/toast.service'
-  import formInput from "@/components/formInput";
+  import formInput from "@/components/formInput"
 
   export default {
     components: {

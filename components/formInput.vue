@@ -1,19 +1,19 @@
 <template>
-    <b-form-group :id="id + 'Group'">
-          <b-form-input
-            :id="id"
-            v-model="model.$model"
-            :placeholder="placeholder"
-            :type="type"
-            :name="id"
-            :state="model.$dirty ? !model.$error : null"
-            :aria-describedby="id + '-live-feedback'"
-          />
+  <b-form-group :id="id + 'Group'">
+    <b-form-input
+      :id="id"
+      v-model="model.$model"
+      :placeholder="placeholder"
+      :type="type"
+      :name="id"
+      :state="model.$dirty ? !model.$error : null"
+      :aria-describedby="id + '-live-feedback'"
+    />
 
-          <b-form-invalid-feedback :id="id + '-live-feedback'">
-            {{message}}
-          </b-form-invalid-feedback>
-        </b-form-group>
+    <b-form-invalid-feedback :id="id + '-live-feedback'">
+      {{ message }}
+    </b-form-invalid-feedback>
+  </b-form-group>
 </template>
 
 <script>
