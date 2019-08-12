@@ -52,7 +52,7 @@
   import { validationMixin } from 'vuelidate'
   import { required, email } from 'vuelidate/lib/validators'
   import { login } from '@/services/login.service'
-  import { doToast } from '@/services/toast.service'
+  import { generateToastNotification } from '@/services/toast.service'
 
   export default {
     mixins: [validationMixin],
@@ -92,7 +92,7 @@
         } catch (e) {
 
           console.log('coucou5')
-          doToast({
+          generateToastNotification({
             toast: this.$toasted,
             message: 'Bad email and password combinaison',
             theme: 'toasted-primary',
