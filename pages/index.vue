@@ -36,7 +36,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-button @click="doLogin" variant="primary" id="loginButton">
+        <b-button id="loginButton" variant="primary" @click="doLogin">
           Submit
         </b-button>
       </b-form>
@@ -78,7 +78,6 @@
     },
     methods: {
       async doLogin() {
-        debugger
         console.log('coucou1')
         try {
           console.log('coucou2')

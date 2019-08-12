@@ -23,6 +23,11 @@ describe('Index', () => {
             },
             stubs: {
                 'b-button': true,
+                'b-form': true,
+                'b-form-input': true,
+                'b-form-invalid-feedback': true,
+                'b-form-group': true,
+                'nuxt-link': true
             },
             propsData: {
                 user: {},
