@@ -61,7 +61,7 @@ describe('Index', () => {
     it('Should return login success', async () => {
         loginStub.resolves('/home')
         
-        await mockClickEvent();
+        await mockClickEvent()
 
         expect($router.push.withArgs('/home').called).toBe(true)
     }),
@@ -69,7 +69,7 @@ describe('Index', () => {
     it('Generate Toast notification in case of bad login', async () => {
         loginStub.throws('eror')
 
-        await mockClickEvent();
+        await mockClickEvent()
 
         expect($toasted.show.called).toBe(true)
     })
