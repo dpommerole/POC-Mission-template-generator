@@ -4,37 +4,21 @@
       <h3>HELLO</h3>
 
       <b-form id="formLogin">
-        <b-form-group id="loginEmailGroup">
-          <b-form-input
-            id="loginEmail"
-            v-model="$v.form.email.$model"
-            placeholder="email"
-            name="loginEmail"
-            type="email"
-            :state="$v.form.email.$dirty ? !$v.form.email.$error : null"
-            aria-describedby="loginEmail-live-feedback"
-          />
-
-          <b-form-invalid-feedback id="loginEmail-live-feedback">
-            This is a required field and must be a valid email.
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group id="loginPasswordGroup">
-          <b-form-input
-            id="loginPassword"
-            v-model="$v.form.password.$model"
-            placeholder="password"
-            type="password"
-            name="loginPassword"
-            :state="$v.form.password.$dirty ? !$v.form.password.$error : null"
-            aria-describedby="loginPassword-live-feedback"
-          />
-
-          <b-form-invalid-feedback id="loginPassword-live-feedback">
-            this is a required field.
-          </b-form-invalid-feedback>
-        </b-form-group>
+        <form-input 
+          id="loginEmail"
+          :model="$v.form.email"
+          placeholder="email"
+          type="email"
+          message="This is a required field and must be a valid email."
+        />
+        
+        <form-input 
+          id="loginPassword"
+          :model="$v.form.password"
+          placeholder="password"
+          type="password"
+          message="This is a required field."
+        />
 
         <b-button id="loginButton" variant="primary" @click="doLogin">
           Submit
@@ -53,8 +37,12 @@
   import { required, email } from 'vuelidate/lib/validators'
   import { login } from '@/services/login.service'
   import { generateToastNotification } from '@/services/toast.service'
+  import formInput from "@/components/formInput"
 
   export default {
+    components: {
+      formInput
+    },
     mixins: [validationMixin],
     data() {
       return {

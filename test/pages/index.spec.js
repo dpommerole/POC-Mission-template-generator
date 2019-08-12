@@ -59,7 +59,6 @@ describe('Index', () => {
 
     it('Should return login success', async () => {
         loginStub.resolves('/home')
-
         await mockClickEvent()
 
         expect($router.push.withArgs('/home').called).toBe(true)
