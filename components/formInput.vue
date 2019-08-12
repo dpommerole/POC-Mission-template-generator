@@ -7,10 +7,10 @@
       :type="type"
       :name="id"
       :state="model.$dirty ? !model.$error : null"
-      :aria-describedby="id + '-live-feedback'"
+      :aria-describedby="`${id}-live-feedback`"
     />
 
-    <b-form-invalid-feedback :id="id + '-live-feedback'">
+    <b-form-invalid-feedback :id="`${id}-live-feedback`">
       {{ message }}
     </b-form-invalid-feedback>
   </b-form-group>
