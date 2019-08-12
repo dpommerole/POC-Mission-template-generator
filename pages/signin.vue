@@ -10,8 +10,7 @@
           placeholder="firstName"
           type="text"
           message="This is a required field"
-        >
-        </form-input>
+        />
 
         <form-input
           id="signInLastName"
@@ -19,8 +18,7 @@
           placeholder="lastName"
           type="text"
           message="This is a required field"
-        >
-        </form-input>
+        />
 
         <form-input
           id="signInEmail"
@@ -28,8 +26,7 @@
           placeholder="email"
           type="email"
           message="This is a required field, must be a valid email and be less than 100 characters."
-        >
-        </form-input>
+        />
 
         <form-input
           id="signInPassword"
@@ -37,8 +34,7 @@
           placeholder="password"
           type="password"
           message="This is a required field."
-        >
-        </form-input>
+        />
 
         <form-input
           id="signInPasswordConfirm"
@@ -46,8 +42,7 @@
           placeholder="passwordConfirm"
           type="password"
           message="Passwords must be identical."
-        >
-        </form-input>
+        />
 
         <b-button id="signInButton" variant="primary" :disabled="$v.form.$invalid" @click="signIn">
           Submit
