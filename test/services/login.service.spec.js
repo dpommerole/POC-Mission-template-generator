@@ -18,12 +18,12 @@ describe('Login Service', () => {
   afterEach(() => {
     sinon.restore()
   })
-  it.skip('Should return the correct route if login has succeeded', async () => {
+  it('Should return the correct route if login has succeeded', async () => {
     auth.loggedIn = true
     const result = await login({auth, email, password})
     expect(result).toBe('/home')
   })
-  it.skip('Should throw an error if login has failed', async () => {
+  it('Should throw an error if login has failed', async () => {
     let result
     auth.loggedIn = false
     try {
