@@ -4,6 +4,7 @@ import sinonModule from 'sinon'
 import Index from '@/pages/index.vue'
 import * as loginService from '@/services/login.service'
 import Vue from 'vue'
+import { generateToastNotification } from '../../services/toast.service'
 
 describe('Index', () => {
 
