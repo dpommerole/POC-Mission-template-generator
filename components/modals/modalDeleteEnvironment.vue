@@ -65,72 +65,72 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      environment: {
-        type: Object,
-        default: () => {}
+export default {
+  props: {
+    environment: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  data () {
+    return {
+      missions: []
+    }
+  },
+  watch: {
+    environment: function (newVal, oldVal) {
+      this.missions = []
+    }
+  },
+  methods: {
+    removeFromAllMission () {
+      console.log('coucou2')
+      const params = {
+        token: this.$auth.getToken('local'),
+        environmentId: this.environment.id
       }
-    },
-    data() {
-      return {
-        missions: [],
-      }
-    },
-    watch: {
-      environment: function (newVal, oldVal) {
-        this.missions = []
-      }
-    },
-    methods: {
-      removeFromAllMission() {
-        console.log('coucou2')
-        const params = {
-          token: this.$auth.getToken('local'),
-          environmentId: this.environment.id
-        }
 
-        this.$axios.delete('/api/environment/deleteAllAttachMission', { params })
-          .then(response => {
-            console.log('remove from all successfuly')
-            this.deleteEnv()
-          })
-      },
-      removeFromOneMission(index) {
-        const params = {
-          token: this.$auth.getToken('local'),
-          missionId: this.missions[index].id,
-          environmentId: this.environment.id
-        }
-        this.$axios.delete('/api/environment/deleteOneAttachMission', { params })
-          .then(response => {
-            this.missions.splice(index, 1)
+      this.$axios.delete('/api/environment/deleteAllAttachMission', { params })
+        .then(response => {
+          console.log('remove from all successfuly')
+          this.deleteEnv()
         })
-      },
-      cancel() {
-        this.$modal.hide('delete-environment')
-      },
-      deleteEnv() {
-        const params = {
-          id: this.environment.id,
-          token: this.$auth.getToken('local')
-        }
-        this.$axios.delete('/api/environment/deleteOne', { params })
-          .then(response => {
-            if (response.data.code === 400) {
-              this.$axios.get('/api/environment/getAttachMission', { params })
-                .then(responseAttach => {
-                  console.log('responseAttach = ', responseAttach)
-                  this.missions = responseAttach.data.missions
-                })
-            } else {
-              this.$emit('deleted-environment', response.data.environment.id)
-              this.cancel()
-            }
-          })
+    },
+    removeFromOneMission (index) {
+      const params = {
+        token: this.$auth.getToken('local'),
+        missionId: this.missions[index].id,
+        environmentId: this.environment.id
       }
+      this.$axios.delete('/api/environment/deleteOneAttachMission', { params })
+        .then(response => {
+          this.missions.splice(index, 1)
+        })
+    },
+    cancel () {
+      this.$modal.hide('delete-environment')
+    },
+    deleteEnv () {
+      const params = {
+        id: this.environment.id,
+        token: this.$auth.getToken('local')
+      }
+      this.$axios.delete('/api/environment/deleteOne', { params })
+        .then(response => {
+          if (response.data.code === 400) {
+            this.$axios.get('/api/environment/getAttachMission', { params })
+              .then(responseAttach => {
+                console.log('responseAttach = ', responseAttach)
+                this.missions = responseAttach.data.missions
+              })
+          } else {
+            this.$emit('deleted-environment', response.data.environment.id)
+            this.cancel()
+          }
+        })
     }
   }
+}
 </script>
 
 <style scoped>

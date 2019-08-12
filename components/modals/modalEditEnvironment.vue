@@ -62,71 +62,71 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { required } from 'vuelidate/lib/validators'
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 
-  export default {
-    mixins: [validationMixin],
-    props: {
-      environment: {
-        type: Object,
-        default: () => {}
-      }
-    },
-    data() {
-      return {
-        form: {
-          name: this.environment.name,
-          logo: this.environment.logo
-        }
-      }
-    },
-    watch: {
-      environment: function (newVal, oldVal) {
-        if (newVal) {
-          this.form.name = newVal.name
-          this.form.logo = newVal.logo
-        } else {
-          this.form.name = ''
-          this.form.logo = ''
-        }
-      }
-    },
-    validations: {
+export default {
+  mixins: [validationMixin],
+  props: {
+    environment: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  data () {
+    return {
       form: {
-        name: {
-          required
-        },
-        logo: {
-          required
-        }
-      }
-    },
-    methods: {
-      cancel() {
-        console.log('cancel')
-        this.$modal.hide('edit-environment')
-      },
-      edit() {
-        console.log('edit')
-        const params = {
-          id: this.environment.id,
-          name: this.$v.form.name.$model,
-          logo: this.$v.form.logo.$model,
-          token: this.$auth.getToken('local')
-        }
-
-        console.log('params = ', params)
-        this.$axios.put('/api/environment/updateOne', params)
-          .then(response => {
-            this.$emit('new-environment', response.data.environment)
-            this.cancel()
-          }).catch(e => {
-          // console.log('error catch = ', e);
-        })
+        name: this.environment.name,
+        logo: this.environment.logo
       }
     }
+  },
+  watch: {
+    environment: function (newVal, oldVal) {
+      if (newVal) {
+        this.form.name = newVal.name
+        this.form.logo = newVal.logo
+      } else {
+        this.form.name = ''
+        this.form.logo = ''
+      }
+    }
+  },
+  validations: {
+    form: {
+      name: {
+        required
+      },
+      logo: {
+        required
+      }
+    }
+  },
+  methods: {
+    cancel () {
+      console.log('cancel')
+      this.$modal.hide('edit-environment')
+    },
+    edit () {
+      console.log('edit')
+      const params = {
+        id: this.environment.id,
+        name: this.$v.form.name.$model,
+        logo: this.$v.form.logo.$model,
+        token: this.$auth.getToken('local')
+      }
+
+      console.log('params = ', params)
+      this.$axios.put('/api/environment/updateOne', params)
+        .then(response => {
+          this.$emit('new-environment', response.data.environment)
+          this.cancel()
+        }).catch(e => {
+          // console.log('error catch = ', e);
+        })
+    }
   }
+}
 </script>
 
 <style scoped>

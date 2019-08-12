@@ -4,15 +4,15 @@
       <h3>HELLO</h3>
 
       <b-form id="formLogin">
-        <form-input 
+        <form-input
           id="loginEmail"
           :model="$v.form.email"
           placeholder="email"
           type="email"
           message="This is a required field and must be a valid email."
         />
-        
-        <form-input 
+
+        <form-input
           id="loginPassword"
           :model="$v.form.password"
           placeholder="password"
@@ -33,57 +33,58 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { required, email } from 'vuelidate/lib/validators'
-  import { login } from '@/services/login.service'
-  import { generateToastNotification } from '@/services/toast.service'
-  import formInput from "@/components/formInput"
+import { validationMixin } from 'vuelidate'
+import { required, email } from 'vuelidate/lib/validators'
+import { login } from '@/services/login.service'
+import { generateToastNotification } from '@/services/toast.service'
+import formInput from '@/components/formInput'
 
-  export default {
-    components: {
-      formInput
-    },
-    mixins: [validationMixin],
-    data() {
-      return {
-        user: {},
-        form: {
-          email: null,
-          password: null
-        }
-      }
-    },
-    validations: {
+export default {
+  components: {
+    formInput
+  },
+  mixins: [validationMixin],
+  data () {
+    return {
+      user: {},
       form: {
-        email: {
-          required,
-          email
-        },
-        password: {
-          required
-        }
+        email: null,
+        password: null
       }
-    },
-    methods: {
-      async doLogin() {
-        try {
-          const loggedRoute = await login({
-            auth: this.$auth,
-            email: this.$v.form.email.$model ,
-            password: this.$v.form.password.$model})
-          this.$router.push(loggedRoute)
-        } catch (e) {
-          generateToastNotification({
-            toast: this.$toasted,
-            message: 'Bad email and password combinaison',
-            theme: 'toasted-primary',
-            position: 'bottom-center',
-            duration : 5000,
-          })
-        }
+    }
+  },
+  validations: {
+    form: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required
+      }
+    }
+  },
+  methods: {
+    async doLogin () {
+      try {
+        const loggedRoute = await login({
+          auth: this.$auth,
+          email: this.$v.form.email.$model,
+          password: this.$v.form.password.$model })
+        this.$router.push(loggedRoute)
+      } catch (e) {
+        generateToastNotification({
+          toast: this.$toasted,
+          message: 'Bad email and password combinaison',
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
       }
     }
   }
+}
+
 </script>
 
 <style scoped>

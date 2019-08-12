@@ -35,7 +35,7 @@ export default {
     { src: '~/plugins/jspdf', ssr: false },
     { src: '~plugins/key.js', ssr: true },
     { src: '~plugins/modal.js', ssr: false },
-    { src: '~plugins/toasted.js', ssr: false },
+    { src: '~plugins/toasted.js', ssr: false }
   ],
   env: {
     ENVIRONMENT: process.env.NODE_ENV
@@ -49,10 +49,10 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    "@nuxtjs/axios",
-    "@nuxtjs/auth",
-    "bootstrap-vue/nuxt",
-    "@nuxtjs/proxy"
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+    'bootstrap-vue/nuxt',
+    '@nuxtjs/proxy'
   ],
   axios: {
     proxy: true
@@ -64,20 +64,20 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: {url: 'http://localhost:3001/api/account/login', method: 'post', propertyName: 'token'},
+          login: { url: 'http://localhost:3001/api/account/login', method: 'post', propertyName: 'token' },
           logout: false,
-          user: {url: 'http://localhost:3001/api/account/me', method: 'get'},
-        },
-        /*tokenRequired: true,
-        tokenType: 'Bearer'*/
-      },
+          user: { url: 'http://localhost:3001/api/account/me', method: 'get' }
+        }
+        /* tokenRequired: true,
+        tokenType: 'Bearer' */
+      }
     },
     redirect: {
       login: '/',
       logout: '/',
       user: false,
       callback: '/'
-    },
+    }
   },
   /*
   ** Build configuration

@@ -18,28 +18,28 @@
 
 <script>
 export default {
-    props: {
-       id: {
-        type: String,
-        default: () => ''
-      },
-      model: {
-        type: Object,
-        default: () => {}
-      },
-      placeholder: {
-        type: String,
-        default: () => ''
-      },
-      type: {
-        type: String,
-        default: () => ''
-      },
-      message: {
-        type: String,
-        default: () => ''
-      }
+  props: {
+    id: {
+      type: String,
+      default: () => ''
+    },
+    model: {
+      type: Object,
+      default: () => {}
+    },
+    placeholder: {
+      type: String,
+      default: () => ''
+    },
+    type: {
+      type: String,
+      default: () => ''
+    },
+    message: {
+      type: String,
+      default: () => ''
     }
+  }
 }
 </script>
 

@@ -1,6 +1,5 @@
 // imports
 
-import Vue from 'vue'
 import sinonModule from 'sinon'
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
@@ -15,7 +14,6 @@ describe('Context of the test', () => {
   let store
   let $router, $route
   let ExampleComponent, exampleStub, secondStub, ExampleStore, something
-
 
   // allow to mount Component in every test
   let mountComponent = () => {
@@ -80,5 +78,6 @@ describe('Context of the test', () => {
 
     // then
     expect(something).toBe(true)
+    expect(component).toBe(true)
   })
 })

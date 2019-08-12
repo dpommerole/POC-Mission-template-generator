@@ -64,91 +64,89 @@
 </template>
 
 <script>
-  import modalDeleteEnvironment from '../components/modals/modalDeleteEnvironment'
-  import modalEditEnvironment from '../components/modals/modalEditEnvironment'
+import modalDeleteEnvironment from '../components/modals/modalDeleteEnvironment'
+import modalEditEnvironment from '../components/modals/modalEditEnvironment'
 
-  export default {
-    components: {
-      modalDeleteEnvironment,
-      modalEditEnvironment
-    },
-    data() {
-      return {
-        environmentsNull: [],
-        environmentsNoCrossOrigin: [],
-        environments: [],
-        selectedEnvironment: {
-          name: '',
-          logo: ''
-        }
+export default {
+  components: {
+    modalDeleteEnvironment,
+    modalEditEnvironment
+  },
+  data () {
+    return {
+      environmentsNull: [],
+      environmentsNoCrossOrigin: [],
+      environments: [],
+      selectedEnvironment: {
+        name: '',
+        logo: ''
       }
-    },
-    mounted() {
-      const params = {
-        token: this.$auth.getToken('local')
-      }
+    }
+  },
+  mounted () {
+    const params = {
+      token: this.$auth.getToken('local')
+    }
 
-      this.$axios.get('/api/environment/getAll', {params})
-        .then(response => {
-          for (let i = 0; i < response.data.environments.length; i++) {
-
-            if (response.data.environments[i].logo === this.$imageFallback) {
-              this.environmentsNull.push(response.data.environments[i])
-            } else {
-              this.environments.push(response.data.environments[i])
-            }
+    this.$axios.get('/api/environment/getAll', { params })
+      .then(response => {
+        for (let i = 0; i < response.data.environments.length; i++) {
+          if (response.data.environments[i].logo === this.$imageFallback) {
+            this.environmentsNull.push(response.data.environments[i])
+          } else {
+            this.environments.push(response.data.environments[i])
           }
-        })
+        }
+      })
+  },
+  methods: {
+    openDeleteModal (environment) {
+      this.$modal.show('delete-environment', {}, {
+        beforeOpenAction: this.selectedEnvironment = environment
+      })
     },
-    methods: {
-      openDeleteModal(environment) {
-        this.$modal.show('delete-environment', {}, {
-          beforeOpenAction: this.selectedEnvironment = environment
-        })
-      },
-      openEditModal(environment) {
-        this.$modal.show('edit-environment', {}, {
-          beforeOpenAction: this.selectedEnvironment = environment
-        })
-      },
-      addToNoCrossOrigin(event) {
-        const index = this.environments.findIndex(elem => elem.logo === event.target.src)
-        if (index !== -1) {
-          this.environmentsNoCrossOrigin.push(this.environments[index])
-          this.environments.splice(index, 1)
-        }
-      },
-      updateEnvironments(environmentEdited) {
-
-        let index = -1
-        if (this.environments.findIndex(elem => elem.id === environmentEdited.id) !== -1) {
-          index = this.environments.findIndex(elem => elem.id === environmentEdited.id)
-          this.environments.splice(index, 1, environmentEdited)
-        } else if (this.environmentsNoCrossOrigin.findIndex(elem => elem.id === environmentEdited.id)) {
-          index = this.environmentsNoCrossOrigin.findIndex(elem => elem.id === environmentEdited.id)
-          this.environmentsNoCrossOrigin.splice(index, 1)
-          this.environments.push(environmentEdited)
-        } else {
-          index = this.environmentsNull.findIndex(elem => elem.id === environmentEdited.id)
-          this.environmentsNull.splice(index, 1)
-          this.environments.push(environmentEdited)
-        }
-      },
-      deleteEnvironment(environmentDeletedId) {
-        let index = -1
-        if (this.environments.findIndex(elem => elem.id === this.selectedEnvironment.id) !== -1) {
-          index = this.environments.findIndex(elem => elem.id === this.selectedEnvironment.id)
-          this.environments.splice(index, 1)
-        } else if (this.environmentsNoCrossOrigin.findIndex(elem => elem.id === this.selectedEnvironment.id) !== -1) {
-          index = this.environmentsNoCrossOrigin.findIndex(elem => elem.id === this.selectedEnvironment.id)
-          this.environmentsNoCrossOrigin.splice(index, 1)
-        } else {
-          index = this.environmentsNull.findIndex(elem => elem.id === this.selectedEnvironment.id)
-          this.environmentsNull.splice(index, 1)
-        }
+    openEditModal (environment) {
+      this.$modal.show('edit-environment', {}, {
+        beforeOpenAction: this.selectedEnvironment = environment
+      })
+    },
+    addToNoCrossOrigin (event) {
+      const index = this.environments.findIndex(elem => elem.logo === event.target.src)
+      if (index !== -1) {
+        this.environmentsNoCrossOrigin.push(this.environments[index])
+        this.environments.splice(index, 1)
+      }
+    },
+    updateEnvironments (environmentEdited) {
+      let index = -1
+      if (this.environments.findIndex(elem => elem.id === environmentEdited.id) !== -1) {
+        index = this.environments.findIndex(elem => elem.id === environmentEdited.id)
+        this.environments.splice(index, 1, environmentEdited)
+      } else if (this.environmentsNoCrossOrigin.findIndex(elem => elem.id === environmentEdited.id)) {
+        index = this.environmentsNoCrossOrigin.findIndex(elem => elem.id === environmentEdited.id)
+        this.environmentsNoCrossOrigin.splice(index, 1)
+        this.environments.push(environmentEdited)
+      } else {
+        index = this.environmentsNull.findIndex(elem => elem.id === environmentEdited.id)
+        this.environmentsNull.splice(index, 1)
+        this.environments.push(environmentEdited)
+      }
+    },
+    deleteEnvironment (environmentDeletedId) {
+      let index = -1
+      if (this.environments.findIndex(elem => elem.id === this.selectedEnvironment.id) !== -1) {
+        index = this.environments.findIndex(elem => elem.id === this.selectedEnvironment.id)
+        this.environments.splice(index, 1)
+      } else if (this.environmentsNoCrossOrigin.findIndex(elem => elem.id === this.selectedEnvironment.id) !== -1) {
+        index = this.environmentsNoCrossOrigin.findIndex(elem => elem.id === this.selectedEnvironment.id)
+        this.environmentsNoCrossOrigin.splice(index, 1)
+      } else {
+        index = this.environmentsNull.findIndex(elem => elem.id === this.selectedEnvironment.id)
+        this.environmentsNull.splice(index, 1)
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
