@@ -5,19 +5,19 @@
       <b-row>
         <b-col>
           <div id="drop">
-            <b-select v-model="selectedValidated" :options="optionsValidated" @change="updateFilters" />
+            <b-select id="selectStateFilter" v-model="selectedValidated" :options="optionsValidated" @change="updateFilters" />
           </div>
         </b-col>
 
         <b-col>
           <div>
-            <b-select v-model="selectedNameGroup" :options="optionsNameGroup" @change="updateFilters" />
+            <b-select id="selectGroupFilter" v-model="selectedNameGroup" :options="optionsNameGroup" @change="updateFilters" />
           </div>
         </b-col>
 
         <b-col>
           <div>
-            <b-select v-model="selectedNameClient" :options="optionsNameClient" @change="updateFilters" />
+            <b-select id="selectClientFilter" v-model="selectedNameClient" :options="optionsNameClient" @change="updateFilters" />
           </div>
         </b-col>
 
@@ -41,7 +41,7 @@
           <b-col v-for="mission in missions" :key="mission.id" md="auto">
             <b-card
               :title="mission.name"
-              :img-src="mission.image"
+              :img-src="mission.image ? mission.image : $imageFallback"
               :img-alt="mission.name"
               img-top
               tag="article"
@@ -80,6 +80,7 @@
 
 <script>
 import { axiosGet } from '@/services/backend.service'
+const MAX_INT = 2147483647
 
 export default {
   data () {
@@ -98,7 +99,7 @@ export default {
       selectedName: null,
       optionsName: [],
       nbPerPage: 10,
-      lastId: 2147483647,
+      lastId: MAX_INT,
       nbRqt: 0
     }
   },
@@ -177,6 +178,7 @@ export default {
   },
   methods: {
     async updateFilters () {
+      const isResetGallery = true
       const params = {
         validated: this.selectedValidated,
         nameGroup: this.selectedNameGroup,
@@ -186,31 +188,18 @@ export default {
         role: this.$auth.user.roleName,
         token: this.$auth.getToken('local'),
         nbPerPage: this.nbPerPage,
-        lastId: 2147483647
+        lastId: MAX_INT
       }
 
-      let gallery = await axiosGet({
-        axios: this.$axios,
-        url: '/api/mission/galery',
-        params
-      })
-
-      if (gallery.data.mission) {
-        this.nbRqt = 1
-
-        this.missions = gallery.data.mission[0]
-
-        if (this.missions && this.missions.length > 0) {
-          this.lastId = this.missions[this.missions.length - 1].id
-        } else {
-          this.lastId = 2147483647
-        }
-      }
+      this.getGallery(params, isResetGallery)
     },
     scroll () {
+      const isResetGallery = false
+
       window.onscroll = () => {
         if (this.missions.length === this.nbRqt * this.nbPerPage) {
-          let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+          let scroll = document.documentElement.scrollTop + window.innerHeight
+          let bottomOfWindow = scroll >= document.documentElement.offsetHeight * 0.90
 
           if (bottomOfWindow) {
             const params = {
@@ -220,13 +209,12 @@ export default {
               nbPerPage: this.nbPerPage,
               lastId: this.lastId
             }
-
-            this.getGallery(params)
+            this.getGallery(params, isResetGallery)
           }
         }
       }
     },
-    async getGallery (params) {
+    async getGallery (params, isResetGallery) {
       params.nbPerPage = params.nbPerPage ? params.nbPerPage : this.nbPerPage
       params.lastId = params.lastId ? params.lastId : 2147483647
 
@@ -235,17 +223,20 @@ export default {
         url: '/api/mission/galery',
         params
       })
-      if (gallery.data.mission && gallery.data.mission[0].length > 0) {
-        this.nbRqt++
 
-        this.missions = this.missions.concat(gallery.data.mission[0])
+      if (gallery.data.mission) {
+        this.nbRqt = isResetGallery ? 1 : this.nbRqt + 1
+        this.missions = isResetGallery ? gallery.data.mission[0] : this.missions.concat(gallery.data.mission[0])
 
-        if (this.missions && this.missions.length > 0) {
-          this.lastId = this.missions[this.missions.length - 1].id
-        } else {
-          this.lastId = 2147483647
-        }
+        this.lastId = this.getLastIdMission(this.missions)
       }
+    },
+
+    getLastIdMission (missionsToCheck) {
+      if (missionsToCheck && missionsToCheck.length > 0) {
+        return missionsToCheck[missionsToCheck.length - 1].id
+      }
+      return MAX_INT
     }
   }
 }
