@@ -24,7 +24,7 @@ export default {
   ** Global CSS
   */
   css: [
-    '@/style/abstracts/abstracts.scss'
+    '@/style/main.scss'
   ],
   /*
   ** Plugins to load before mounting the App
