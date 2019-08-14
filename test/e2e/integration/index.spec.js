@@ -1,12 +1,11 @@
-const loginApiRoute = '/api/account/login'
-const meApiRoute = '/api/account/me'
+import { LOGIN_API, ME_API } from '../apiRoutes'
 describe('Index test page', () => {
   beforeEach(() => {
     cy.visit('/')
 
     cy.server()
-    cy.fixture('index.json').then((data) => {
-      cy.route('GET', meApiRoute, data.me.success).as('meSuccess')
+    cy.fixture('account.json').then((data) => {
+      cy.route('GET', ME_API, data.me.success).as('meSuccess')
     })
   })
 
@@ -14,8 +13,8 @@ describe('Index test page', () => {
     cy.get('#loginEmail').type('john@doe.com')
     cy.get('#loginPassword').type('foobar')
 
-    cy.fixture('index.json').then((data) => {
-      cy.route('POST', loginApiRoute, data.login.success).as('loginSuccess')
+    cy.fixture('account.json').then((data) => {
+      cy.route('POST', LOGIN_API, data.login.success).as('loginSuccess')
     })
 
     cy.get('#loginButton').click()
