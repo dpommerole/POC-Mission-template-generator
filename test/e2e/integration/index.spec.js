@@ -26,7 +26,9 @@ describe('Index test page', () => {
   })
 
   it('Should show an error if a field isn‘t correctly filled', () => {
-    // type a wrongs infos in the fields and check the visibility of the error message
+    cy.get('#loginEmail').type('john@do')
+
+    cy.get('#loginEmail-live-feedback').should('be.visible') 
   })
 
   it('Should show an error if there is something wrong with the backend request', () => {
