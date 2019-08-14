@@ -4,7 +4,7 @@ describe('Index test page', () => {
     // type in the field, and click on the submit button
   })
 
-  it('Should show an error if a if isn‘t correctly filled', () => {
+  it('Should show an error if a field isn‘t correctly filled', () => {
     // type a wrongs infos in the fields and check the visibility of the error message
   })
 
