@@ -16,9 +16,10 @@
     "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
   "pre-commit": [
-    "lintfix",
     "test:unit",
-    "test:e2e"
+    "test:e2e",
+    "lintfix",
+    "lint"
   ],
   "dependencies": {
     "@nuxtjs/auth": "^4.8.1",
