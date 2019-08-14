@@ -1,7 +1,29 @@
+const loginApiRoute = '/api/account/login'
+const meApiRoute = '/api/account/me'
 describe('Index test page', () => {
+  beforeEach(() => {
+    cy.visit('/')
+
+    cy.server()
+    cy.fixture('index.json').then((data) => {
+      cy.route('GET', meApiRoute, data.me.success).as('meSuccess')
+    })
+  })
+
   it('Should login and redirect', () => {
-    // Create a fixture which will mock the backend request
-    // type in the field, and click on the submit button
+    cy.get('#loginEmail').type('john@doe.com')
+    cy.get('#loginPassword').type('foobar')
+
+    cy.fixture('index.json').then((data) => {
+      cy.route('POST', loginApiRoute, data.login.success).as('loginSuccess')
+    })
+
+    cy.get('#loginButton').click()
+
+    cy.wait('@loginSuccess')
+    cy.wait('@meSuccess')
+
+    cy.url().should('include', 'home')
   })
 
   it('Should show an error if a field isn‘t correctly filled', () => {
