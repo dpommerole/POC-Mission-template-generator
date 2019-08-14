@@ -11,10 +11,10 @@ describe('Index test page', () => {
     cy.get('#loginPassword').type('foobar')
 
     cy.fixture('account.json').then((data) => {
-      cy.route('POST', LOGIN_API, data.login.success).as('loginSuccess')
+      cy.route('POST', LOGIN_API, data.login.success, { status: 200 }).as('loginSuccess')
     })
     cy.fixture('account.json').then((data) => {
-      cy.route('GET', ME_API, data.me.success).as('meSuccess')
+      cy.route('GET', ME_API, data.me.success, { status: 200 }).as('meSuccess')
     })
 
     cy.get('#loginButton').click()
@@ -36,13 +36,12 @@ describe('Index test page', () => {
     cy.get('#loginPassword').type('foobar')
 
     cy.fixture('account.json').then((data) => {
-      cy.route('POST', LOGIN_API, data.login.failure).as('loginFailure')
+      cy.route('POST', LOGIN_API, data.login.failure, { status: 401 }).as('loginFailure')
     })
 
     cy.get('#loginButton').click()
 
     cy.wait('@loginFailure')
     cy.get('.toasted').should('be.visible')
-    // here, we will need a fixture to mock the backend request , with an error this time
   })
 })
