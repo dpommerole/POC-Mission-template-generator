@@ -3,8 +3,8 @@ $base-url: '~@/assets/' !default;
 $ds-mult-factor: 8; // Design System constant multiplication factor for margins, paddings, gutters, etc...
 
 $icon-font-path: 'icons';
-$primary-font: Roboto, 'Avenir', Helvetica, Arial, sans-serif;
-$secondary-font: 'HomebookFont', 'Open sans';
+$primary-font: Helvetica, Arial, sans-serif;
+$secondary-font:  'Open sans';
 
 /// RWD (values are in em because 'rem' unit is useless with Media Queries. See https://fvsch.com/browser-bugs/rem-mediaquery/)
 $breakpoints: (
