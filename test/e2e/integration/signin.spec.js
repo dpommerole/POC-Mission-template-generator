@@ -44,7 +44,7 @@ describe('SignIn test page', () => {
     cy.get('#signInLastName-live-feedback').should('be.visible')
   })
 
-  it('Should show error if the mail field isn\'t correctly filled', () => {
+it('Should show error if the mail field isn‘t correctly filled', () => {
     cy.get('#signInEmail').type('thisEmailIs@nError')
 
     cy.get('#signInEmail-live-feedback').should('be.visible')
