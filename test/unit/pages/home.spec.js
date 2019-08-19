@@ -11,7 +11,6 @@ describe('Home', () => {
   let params
   let $auth
   let $imageFallback
-  let resultFilterHome
   let axiosGetStub
 
   beforeEach(() => {
@@ -33,17 +32,11 @@ describe('Home', () => {
       }
     }
     $imageFallback = 'https://upload.wikimedia.org/wikipedia/commons/2/20/Point_d_interrogation.jpg'
-    resultFilterHome = {
-      optionsNameGroup: '',
-      optionsNameClient: '',
-      optionsName: ''
-    }
 
     wrapper = shallowMount(Home, {
       mocks: {
         $auth,
         $imageFallback,
-        resultFilterHome
       },
       stubs: {
         'b-card': true,
@@ -65,28 +58,26 @@ describe('Home', () => {
 
   it('Should return a success after get gallery', async () => {
     const isResetGallery = false
-    console.log(wrapper.vm.missions.length)
-    let resol = {
+    let mockGalleryResult = {
       data: {
         mission: [[{ id: 1, image: '', name: '' }, { id: 2, image: '', name: '' }]]
       }
     }
-    axiosGetStub.resolves(resol)
+    axiosGetStub.resolves(mockGalleryResult)
     await wrapper.vm.getGallery(params, isResetGallery)
 
     expect(wrapper.vm.missions.length).toBe(4)
   })
   it('Should reset and show the results of returned gallery', async () => {
     const isResetGallery = true
-    console.log(wrapper.vm.missions.length)
-    let resol = {
+    let mockGalleryResult = {
       data: {
         mission: [[{ id: 1, image: '', name: '' }, { id: 2, image: '', name: '' }]]
       }
     }
-    axiosGetStub.resolves(resol)
+    axiosGetStub.resolves(mockGalleryResult)
     await wrapper.vm.getGallery(params, isResetGallery)
-
+    
     expect(wrapper.vm.missions.length).toBe(2)
   })
 })

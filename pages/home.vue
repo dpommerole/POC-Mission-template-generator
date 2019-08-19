@@ -143,8 +143,6 @@ export default {
 
       window.onscroll = async () => {
         if (this.missions.length === this.nbRqt * this.nbPerPage) {
-          console.log('scroll', document.documentElement.scrollTop + window.innerHeight)
-          console.log('windows offset', document.documentElement.offsetHeight)
           let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight * 0.90
 
           if (bottomOfWindow && !this.hasTriggeredBottomScroll) {
@@ -163,7 +161,6 @@ export default {
       }
     },
     async getGallery (params, isResetGallery) {
-      console.log('getGallery function called')
       params.nbPerPage = params.nbPerPage ? params.nbPerPage : this.nbPerPage
       params.lastId = params.lastId ? params.lastId : MAX_INT
 
