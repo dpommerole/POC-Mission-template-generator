@@ -3,88 +3,48 @@
     <div class="login--window">
       <h3>HELLO</h3>
 
-      <b-form @submit.stop.prevent="signIn">
-        <b-form-group id="firstNameGroup">
-          <b-form-input
-            id="signInFirstName"
-            v-model="$v.form.firstName.$model"
-            placeholder="firstName"
-            name="signInFirstName"
-            type="text"
-            :state="$v.form.firstName.$dirty ? !$v.form.firstName.$error : null"
-            aria-describedby="signInFirstName-live-feedback"
-          />
+      <b-form id="formSignIn">
+        <form-input
+          id="signInFirstName"
+          :model="$v.form.firstName"
+          placeholder="firstName"
+          type="text"
+          message="This is a required field"
+        />
 
-          <b-form-invalid-feedback id="signInFirstName-live-feedback">
-            This is a required field.
-          </b-form-invalid-feedback>
-        </b-form-group>
+        <form-input
+          id="signInLastName"
+          :model="$v.form.lastName"
+          placeholder="lastName"
+          type="text"
+          message="This is a required field"
+        />
 
-        <b-form-group id="lastNameGroup">
-          <b-form-input
-            id="signInLastName"
-            v-model="$v.form.lastName.$model"
-            placeholder="lastName"
-            name="signInLastName"
-            type="text"
-            :state="$v.form.lastName.$dirty ? !$v.form.lastName.$error : null"
-            aria-describedby="signInLastName-live-feedback"
-          />
+        <form-input
+          id="signInEmail"
+          :model="$v.form.email"
+          placeholder="email"
+          type="email"
+          message="This is a required field, must be a valid email and be less than 100 characters."
+        />
 
-          <b-form-invalid-feedback id="signInLastName-live-feedback">
-            This is a required field.
-          </b-form-invalid-feedback>
-        </b-form-group>
+        <form-input
+          id="signInPassword"
+          :model="$v.form.password"
+          placeholder="password"
+          type="password"
+          message="This is a required field."
+        />
 
-        <b-form-group id="emailGroup">
-          <b-form-input
-            id="signInEmail"
-            v-model="$v.form.email.$model"
-            placeholder="email"
-            name="signInEmail"
-            type="email"
-            :state="$v.form.email.$dirty ? !$v.form.email.$error : null"
-            aria-describedby="signInEmail-live-feedback"
-          />
+        <form-input
+          id="signInPasswordConfirm"
+          :model="$v.form.passwordConfirm"
+          placeholder="passwordConfirm"
+          type="password"
+          message="Passwords must be identical."
+        />
 
-          <b-form-invalid-feedback id="signInEmail-live-feedback">
-            This is a required field, must be a valid email and be less than 100 characters.
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group id="passwordGroup">
-          <b-form-input
-            id="signInPassword"
-            v-model="$v.form.password.$model"
-            placeholder="password"
-            name="signInPassword"
-            type="password"
-            :state="$v.form.password.$dirty ? !$v.form.password.$error : null"
-            aria-describedby="signInPassword-live-feedback"
-          />
-
-          <b-form-invalid-feedback id="signInPassword-live-feedback">
-            This is a required field.
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group id="passwordConfirmGroup">
-          <b-form-input
-            id="signInPasswordConfirm"
-            v-model="$v.form.passwordConfirm.$model"
-            placeholder="passwordConfirm"
-            name="signInPasswordConfirm"
-            type="password"
-            :state="$v.form.passwordConfirm.$dirty ? !$v.form.passwordConfirm.$error : null"
-            aria-describedby="signInPasswordConfirm-live-feedback"
-          />
-
-          <b-form-invalid-feedback id="signInPasswordConfirm-live-feedback">
-            Passwords must be identical.
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-button type="submit" variant="primary" :disabled="$v.form.$invalid">
+        <b-button id="signInButton" variant="primary" :disabled="$v.form.$invalid" @click="signIn">
           Submit
         </b-button>
       </b-form>
@@ -99,8 +59,14 @@
 import { validationMixin } from 'vuelidate'
 import { required, email, sameAs, maxLength } from 'vuelidate/lib/validators'
 import { login } from '@/services/login.service'
+import { axiosPost } from '@/services/backend.service'
+import { generateToastNotification } from '@/services/toast.service'
+import formInput from '@/components/formInput'
 
 export default {
+  components: {
+    formInput
+  },
   mixins: [validationMixin],
   auth: false,
   data () {
@@ -147,24 +113,39 @@ export default {
       }
 
       try {
-        await this.$axios.post('/api/account/register', { params })
-          .then(response => {
-            this.user = response.data.user
-
-            this.doLogin()
+        const signInResponse = await axiosPost(
+          {
+            axios: this.$axios,
+            url: '/api/account/register',
+            params
           })
+        this.user = signInResponse.data.user
+        this.doLogin()
       } catch {
-        console.error('An error occurred.')
+        generateToastNotification({
+          toast: this.$toasted,
+          message: 'An error occured with the server',
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
       }
     },
     async doLogin () {
       try {
-        this.$router.push(await login({
+        const loggedRoute = await login({
           auth: this.$auth,
           email: this.user.email,
-          password: this.$v.form.password.$model }))
+          password: this.$v.form.password.$model })
+        this.$router.push(loggedRoute)
       } catch (e) {
-        console.log(e)
+        generateToastNotification({
+          toast: this.$toasted,
+          message: 'Log in to home has failed',
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
       }
     }
   }
