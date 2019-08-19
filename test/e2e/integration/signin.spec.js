@@ -22,7 +22,7 @@ describe('SignIn test page', () => {
     cy.fixture('account.json').then((data) => {
       cy.route('GET', ME_API, data.me.success, { status: 200 }).as('meSuccess')
     })
-    
+
     cy.get('#signInButton').click()
     cy.wait('@registerSuccess')
     cy.wait('@loginSuccess')
@@ -64,7 +64,6 @@ describe('SignIn test page', () => {
     cy.get('#signInPasswordConfirm-live-feedback').should('be.visible')
   })
 
-
   it('Should show error if the response from backend is: register has failed', () => {
     cy.get('#signInFirstName').type('John')
     cy.get('#signInLastName').type('Doe')
@@ -103,5 +102,4 @@ describe('SignIn test page', () => {
 
     cy.get('body').find('.toasted').should('be.visible')
   })
-
 })

@@ -47,7 +47,7 @@ describe('Index test page', () => {
     })
 
     cy.get('#loginButton').click()
-    
+
     cy.wait('@loginFailure')
 
     cy.get('.toasted').should('be.visible')
