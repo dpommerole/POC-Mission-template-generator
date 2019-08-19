@@ -165,7 +165,7 @@ export default {
     async getGallery (params, isResetGallery) {
       console.log('getGallery function called')
       params.nbPerPage = params.nbPerPage ? params.nbPerPage : this.nbPerPage
-      params.lastId = params.lastId ? params.lastId : 2147483647
+      params.lastId = params.lastId ? params.lastId : MAX_INT
 
       let gallery = await axiosGet({
         axios: this.$axios,
