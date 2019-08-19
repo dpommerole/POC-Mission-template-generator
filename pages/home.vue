@@ -5,19 +5,19 @@
       <b-row>
         <b-col>
           <div id="drop">
-            <b-select v-model="selectedValidated" :options="optionsValidated" @change="updateFilters" />
+            <b-select id="selectStateFilter" v-model="selectedValidated" :options="optionsValidated" @change="updateFilters" />
           </div>
         </b-col>
 
         <b-col>
           <div>
-            <b-select v-model="selectedNameGroup" :options="optionsNameGroup" @change="updateFilters" />
+            <b-select id="selectGroupFilter" v-model="selectedNameGroup" :options="optionsNameGroup" @change="updateFilters" />
           </div>
         </b-col>
 
         <b-col>
           <div>
-            <b-select v-model="selectedNameClient" :options="optionsNameClient" @change="updateFilters" />
+            <b-select id="selectClientFilter" v-model="selectedNameClient" :options="optionsNameClient" @change="updateFilters" />
           </div>
         </b-col>
 
@@ -41,7 +41,7 @@
           <b-col v-for="mission in missions" :key="mission.id" md="auto">
             <b-card
               :title="mission.name"
-              :img-src="mission.image"
+              :img-src="mission.image ? mission.image : $imageFallback"
               :img-alt="mission.name"
               img-top
               tag="article"
@@ -80,6 +80,8 @@
 
 <script>
 import { axiosGet } from '@/services/backend.service'
+import { getFilterHome } from '@/services/homeFilter.service'
+const MAX_INT = 2147483647
 
 export default {
   data () {
@@ -98,8 +100,9 @@ export default {
       selectedName: null,
       optionsName: [],
       nbPerPage: 10,
-      lastId: 2147483647,
-      nbRqt: 0
+      lastId: MAX_INT,
+      nbRqt: 0,
+      hasTriggeredBottomScroll: false
     }
   },
   async mounted () {
@@ -113,70 +116,14 @@ export default {
 
     this.getGallery(params)
 
-    // fill optionNameGroup
-    this.optionsNameGroup = [
-      { value: null, text: 'Select a group name' }
-    ]
-
-    let responseDistinctNameGroup = await axiosGet({
-      axios: this.$axios,
-      url: '/api/mission/getDistinctNameGroup',
-      params
-    })
-
-    const organiseDistinctNameGroup = responseDistinctNameGroup.data.nameGroups
-      .map(elem => {
-        return { text: elem.nameGroup, value: elem.nameGroup }
-      })
-      .filter(elem => elem.text)
-
-    this.optionsNameGroup = this.optionsNameGroup.concat(organiseDistinctNameGroup)
-    // END fill optionNameGroup
-
-    // fill optionNameClient
-    this.optionsNameClient = [
-      { value: null, text: 'Select a client name' }
-    ]
-
-    let responseDistinctNameClient = await axiosGet({
-      axios: this.$axios,
-      url: '/api/mission/getDistinctNameClient',
-      params
-    })
-
-    const organiseDistinctNameClient = responseDistinctNameClient.data.nameClients
-      .map(elem => {
-        return { text: elem.nameClient, value: elem.nameClient }
-      })
-      .filter(elem => elem.text)
-
-    this.optionsNameClient = this.optionsNameClient.concat(organiseDistinctNameClient)
-    // END fill optionNameClient
-
-    // fill optionName
-    if (this.$auth.user.roleName === 'ADM') {
-      this.optionsName = [
-        { value: null, text: 'Select a name' }
-      ]
-
-      let responseDistinctName = await axiosGet({
-        axios: this.$axios,
-        url: '/api/mission/getDistinctName',
-        params
-      })
-
-      const organiseDistinctName = responseDistinctName.data.names
-        .map(elem => {
-          return { text: elem.name, value: elem.name }
-        })
-        .filter(elem => elem.text)
-
-      this.optionsName = this.optionsName.concat(organiseDistinctName)
-    }
-    // END fill optionNameClient
+    const resultFilterHome = await getFilterHome(params, this.$axios)
+    this.optionsNameGroup = resultFilterHome.optionsNameGroup
+    this.optionsNameClient = resultFilterHome.optionsNameClient
+    this.optionsName = resultFilterHome.optionsName ? resultFilterHome.optionsName : []
   },
   methods: {
     async updateFilters () {
+      const isResetGallery = true
       const params = {
         validated: this.selectedValidated,
         nameGroup: this.selectedNameGroup,
@@ -186,8 +133,36 @@ export default {
         role: this.$auth.user.roleName,
         token: this.$auth.getToken('local'),
         nbPerPage: this.nbPerPage,
-        lastId: 2147483647
+        lastId: MAX_INT
       }
+
+      this.getGallery(params, isResetGallery)
+    },
+    scroll () {
+      const isResetGallery = false
+
+      window.onscroll = async () => {
+        if (this.missions.length === this.nbRqt * this.nbPerPage) {
+          let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight * 0.90
+
+          if (bottomOfWindow && !this.hasTriggeredBottomScroll) {
+            this.hasTriggeredBottomScroll = true
+            const params = {
+
+              userId: this.$auth.user.id,
+              role: this.$auth.user.roleName,
+              token: this.$auth.getToken('local'),
+              nbPerPage: this.nbPerPage,
+              lastId: this.lastId
+            }
+            await this.getGallery(params, isResetGallery)
+          }
+        }
+      }
+    },
+    async getGallery (params, isResetGallery) {
+      params.nbPerPage = params.nbPerPage ? params.nbPerPage : this.nbPerPage
+      params.lastId = params.lastId ? params.lastId : MAX_INT
 
       let gallery = await axiosGet({
         axios: this.$axios,
@@ -196,56 +171,19 @@ export default {
       })
 
       if (gallery.data.mission) {
-        this.nbRqt = 1
+        this.nbRqt = isResetGallery ? 1 : this.nbRqt + 1
+        this.missions = isResetGallery ? gallery.data.mission[0] : this.missions.concat(gallery.data.mission[0])
 
-        this.missions = gallery.data.mission[0]
-
-        if (this.missions && this.missions.length > 0) {
-          this.lastId = this.missions[this.missions.length - 1].id
-        } else {
-          this.lastId = 2147483647
-        }
+        this.lastId = this.getLastIdMission()
       }
+      this.hasTriggeredBottomScroll = false
     },
-    scroll () {
-      window.onscroll = () => {
-        if (this.missions.length === this.nbRqt * this.nbPerPage) {
-          let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
 
-          if (bottomOfWindow) {
-            const params = {
-              userId: this.$auth.user.id,
-              role: this.$auth.user.roleName,
-              token: this.$auth.getToken('local'),
-              nbPerPage: this.nbPerPage,
-              lastId: this.lastId
-            }
-
-            this.getGallery(params)
-          }
-        }
+    getLastIdMission () {
+      if (this.missions.length > 0) {
+        return this.missions[this.missions.length - 1].id
       }
-    },
-    async getGallery (params) {
-      params.nbPerPage = params.nbPerPage ? params.nbPerPage : this.nbPerPage
-      params.lastId = params.lastId ? params.lastId : 2147483647
-
-      let gallery = await axiosGet({
-        axios: this.$axios,
-        url: '/api/mission/galery',
-        params
-      })
-      if (gallery.data.mission && gallery.data.mission[0].length > 0) {
-        this.nbRqt++
-
-        this.missions = this.missions.concat(gallery.data.mission[0])
-
-        if (this.missions && this.missions.length > 0) {
-          this.lastId = this.missions[this.missions.length - 1].id
-        } else {
-          this.lastId = 2147483647
-        }
-      }
+      return MAX_INT
     }
   }
 }
