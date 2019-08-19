@@ -36,7 +36,7 @@ describe('Home', () => {
     wrapper = shallowMount(Home, {
       mocks: {
         $auth,
-        $imageFallback,
+        $imageFallback
       },
       stubs: {
         'b-card': true,
@@ -77,7 +77,7 @@ describe('Home', () => {
     }
     axiosGetStub.resolves(mockGalleryResult)
     await wrapper.vm.getGallery(params, isResetGallery)
-    
+
     expect(wrapper.vm.missions.length).toBe(2)
   })
 })
