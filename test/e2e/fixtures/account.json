@@ -21,6 +21,25 @@
       }
     }
   },
+  "register": {
+    "success": {
+      "data": {
+        "code": 200,
+        "message": "Success!"
+      },
+      "user": {
+        "id": 1,
+        "name": "John",
+        "email": "john@doe.com"
+      }
+    },
+    "failure": {
+      "data": {
+        "code": 400,
+        "mesage": "Error!"
+      }
+    }
+  },
   "me": {
     "success": {
       "user": {

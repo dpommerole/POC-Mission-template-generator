@@ -25,10 +25,17 @@ describe('Index test page', () => {
     cy.url().should('include', 'home')
   })
 
-  it('Should show an error if a field isn‘t correctly filled', () => {
+  it('Should show an error if a email field isn‘t correctly filled', () => {
     cy.get('#loginEmail').type('john@do')
 
     cy.get('#loginEmail-live-feedback').should('be.visible')
+  })
+
+  it('Should show an error if a field is empty', () => {
+    cy.get('#loginPassword').type('password')
+    cy.get('#loginPassword').clear()
+
+    cy.get('#loginPassword-live-feedback').should('be.visible')
   })
 
   it('Should show an error if there is something wrong with the backend request', () => {
@@ -42,6 +49,7 @@ describe('Index test page', () => {
     cy.get('#loginButton').click()
 
     cy.wait('@loginFailure')
+
     cy.get('.toasted').should('be.visible')
   })
 })
