@@ -1,0 +1,35 @@
+{
+  "login": {
+    "success": {
+      "data": {
+        "code": 200,
+        "message": "Success!",
+        "user": {
+            "id": 1,
+            "name": "John",
+            "email": "john@doe.com",
+            "roleId": "0",
+            "roleName": "USR"
+        },
+        "token": "11111111111"
+      }
+    },
+    "failure": {
+      "data": {
+        "code": 401,
+        "message": "Error!"
+      }
+    }
+  },
+  "me": {
+    "success": {
+      "user": {
+        "id": 1,
+        "name": "John",
+        "email": "john@doe.com",
+        "roleId": "0",
+        "roleName": "USR"
+      }
+    }
+  }
+}
