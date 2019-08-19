@@ -1,0 +1,35 @@
+// -----------------------------------------------------------------------------
+// Color declarations
+// (naming convention : http://www.color-blindness.com/color-name-hue/):
+// -----------------------------------------------------------------------------
+
+// Black, White & grays
+$black : #000;
+$white : #fff;
+$night-rider : #333;
+$lily-white : #f4f6f5;
+$zircon : #e5ebeb;
+$gainsboro : #dddddd;
+$nobel : #999;
+
+// Other colors
+$light-cyan : #e6fffc;
+$turquoise-blue : #7bdee6;
+$pale-turquoise : #abf1e9;
+$iris-blue : #00bdcc;
+$surfie-green : #006e80;
+$sherpa-blue : #004a59;
+$dark-slate : #4c5757;
+$dark-green : #032526;
+$lime-green : #3aba29;
+$atlantis : #8dcf4f;
+$tangerine : #df8a02;
+$jazzberry-jam : #a00442;
+$wild-watermelon : #ff4d80;
+
+// -----------------------------------------------------------------------------
+// Color scopes:
+// -----------------------------------------------------------------------------
+$full-bg-gradient : linear-gradient(215.16deg, $pale-turquoise 0%, $iris-blue 100%);
+$mdl-backdrop-color: rgba($black, 0.4);
+

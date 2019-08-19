@@ -1,0 +1,30 @@
+$root-font-size: 10px;
+$base-url: '~@/assets/' !default;
+$ds-mult-factor: 8; // Design System constant multiplication factor for margins, paddings, gutters, etc...
+
+$icon-font-path: 'icons';
+$primary-font: Roboto, 'Avenir', Helvetica, Arial, sans-serif;
+$secondary-font: 'HomebookFont', 'Open sans';
+
+/// RWD (values are in em because 'rem' unit is useless with Media Queries. See https://fvsch.com/browser-bugs/rem-mediaquery/)
+$breakpoints: (
+  /* ~336px with root font-size at 10px, iphone 4 */ 'xsmall': 21em,
+  /* ~380px, iphone 6/7/8 */ 'small': 23.75em,
+  /* ~450px, iphone 6/7/8 */ 'normal': 28.125em,
+  /* ~480px, iphone 2G/3G/3GS & iphone 4/4S */ 'height-small': 30em,
+  /* ~580px, iphone 2G/3G/3GS & iphone 4/4S */ 'height-normal': 36.25em,
+  /* ~800px, iphone 6/7/8 Plus, phablet, tablet */ 'large': 50em,
+  /* ~1024px, XL tablet */ 'xlarge': 64em,
+  /* ~1366px, PC */ 'xxlarge': 85.375em
+) !default;
+
+// Z-Indexes
+$z-base-modal: 99;
+$z-base-modal-content: 199;
+
+// shadow elevations
+$elevation-0: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+$elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+$elevation-2: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+$elevation-3: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+$elevation-4: 0 8px 16px 0 rgba(0, 0, 0, 0.4);

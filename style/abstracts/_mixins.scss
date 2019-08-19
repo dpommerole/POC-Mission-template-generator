@@ -1,0 +1,43 @@
+// BREAKPOINTS MIXINS
+
+@mixin breakpoint-min($bp, $direction: 'width') {
+    @media (min-#{$direction}: $bp) {
+      @content;
+    }
+  }
+
+  @mixin breakpoint-max($bp, $direction: 'width') {
+    @media (max-#{$direction}: $bp) {
+      @content;
+    }
+  }
+
+  @mixin breakpoint-min-max($bp1, $bp2, $direction: 'width') {
+    @media (min-#{$direction}: $bp1) and (max-#{$direction}: $bp2) {
+      @content;
+    }
+  }
+
+  @mixin min-height-small() {
+    @include breakpoint-min(map-get($breakpoints, 'height-small') + em(1), 'height') {
+      @content;
+    }
+  }
+
+  @mixin min-height-normal() {
+    @include breakpoint-min(map-get($breakpoints, 'height-normal') + em(1), 'height') {
+      @content;
+    }
+  }
+
+  @mixin min-medium-phone() {
+    @include breakpoint-min(map-get($breakpoints, 'small') + em(1)) {
+      @content;
+    }
+  }
+
+  @mixin min-phablet() {
+    @include breakpoint-min(map-get($breakpoints, 'large') + em(1)) {
+      @content;
+    }
+  }

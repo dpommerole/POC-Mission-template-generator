@@ -1,0 +1,23 @@
+@function em($pixels) {
+    @if (unitless($pixels)) {
+      $pixels: $pixels * 1px;
+    }
+
+    @return $pixels / $root-font-size * 1em;
+  }
+
+  @function asset($base, $type, $path) {
+    @return url($base+$type+$path);
+  }
+
+  @function image($path, $base: $base-url) {
+    @return asset($base, 'img/', $path);
+  }
+
+  @function font($path, $base: $base-url) {
+    @return asset($base, 'fonts/', $path);
+  }
+
+  @function icons($path, $base: $base-url) {
+    @return asset($base, 'icons/', $path);
+  }
